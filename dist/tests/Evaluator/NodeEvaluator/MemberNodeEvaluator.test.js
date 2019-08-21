@@ -7,9 +7,6 @@ var MemberNodeEvaluator_1 = __importDefault(require("../../../src/Evaluator/Node
 var Expression_1 = require("../../../src/Contract/Expression");
 var Node_1 = __importDefault(require("../../../src/Evaluator/Node"));
 var evaluator = new MemberNodeEvaluator_1.default;
-describe('test evaluates key and value', function () {
-    it.each(keysAndValuesProvider);
-});
 var keysAndValuesProvider = [
     [
         {

@@ -20,7 +20,7 @@ var EvaluatorFactory = /** @class */ (function () {
         EvaluatorFactory
             .defaultEvaluators()
             .concat(nodeEvaluators)
-            .forEach(evaluator.addNodeEvaluator);
+            .forEach(function (item) { return evaluator.addNodeEvaluator(item); });
         return evaluator;
     };
     EvaluatorFactory.defaultEvaluators = function () {
@@ -35,5 +35,5 @@ var EvaluatorFactory = /** @class */ (function () {
     };
     return EvaluatorFactory;
 }());
-exports.EvaluatorFactory = EvaluatorFactory;
+exports.default = EvaluatorFactory;
 //# sourceMappingURL=Factory.js.map

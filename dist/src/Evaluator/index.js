@@ -55,16 +55,23 @@ var Evaluator = /** @class */ (function () {
         // array will get the values.
         for (var _i = 0, orderedNodes_1 = orderedNodes; _i < orderedNodes_1.length; _i++) {
             var node = orderedNodes_1[_i];
-            node.value = this.evalNode(node);
+            node.value = this.evalNode(node, context);
         }
         // all the nodes are evaluated, so we can join the parts of the
         // expression together.
         return ast.join('');
     };
-    Evaluator.prototype.evalNode = function (node) {
-        return node.type();
+    Evaluator.prototype.evalNode = function (node, context) {
+        return this.getNodeEvaluator(node.type()).evaluate(node, context);
     };
     Evaluator.prototype.addNodeEvaluator = function (evaluator) {
+        this.evaluators.set(evaluator.handles(), evaluator);
+    };
+    Evaluator.prototype.getNodeEvaluator = function (type) {
+        if (this.evaluators.has(type)) {
+            return this.evaluators.get(type);
+        }
+        throw Error("No evaluator for node type " + type + " found");
     };
     Evaluator.prototype.hasNodes = function (collection) {
         return Array.isArray(collection)

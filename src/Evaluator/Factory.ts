@@ -15,7 +15,7 @@ export default class EvaluatorFactory {
 		EvaluatorFactory
 			.defaultEvaluators()
 			.concat(nodeEvaluators)
-			.forEach(evaluator.addNodeEvaluator);
+			.forEach(item => evaluator.addNodeEvaluator(item));
 
 		return evaluator;
 	}

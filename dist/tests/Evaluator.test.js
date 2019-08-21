@@ -1,8 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var Evaluator_1 = require("../src/Evaluator");
-var Parser_1 = require("floip-parser/dist/Parser");
-var evaluator = new Evaluator_1.Evaluator(Parser_1.parse);
+var Factory_1 = __importDefault(require("../src/Evaluator/Factory"));
+var evaluator = Factory_1.default.create();
 it('returns a string from an expression', function () {
     expect(evaluator.evaluate('Hello World', {}))
         .toEqual('Hello World');

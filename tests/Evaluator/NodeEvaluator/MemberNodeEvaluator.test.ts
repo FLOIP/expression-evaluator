@@ -5,10 +5,6 @@ import Node from '../../../src/Evaluator/Node';
 
 const evaluator : NodeEvaluator = new MemberNodeEvaluator;
 
-describe('test evaluates key and value', () => {
-	it.each(keysAndValuesProvider, )
-});
-
 const keysAndValuesProvider : Array<Array<Object|String>> = [
 	[
 		{

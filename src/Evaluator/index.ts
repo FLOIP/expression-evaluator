@@ -4,10 +4,9 @@ import Node from './Node';
 import { NodeEvaluator } from './NodeEvaluator';
 
 export class Evaluator {
-	evaluators: Map<string, any>;
+	private evaluators: Map<string, any> = new Map();
 
 	constructor(private parse: ParseFunction) {
-		this.evaluators = new Map();
 	}
 
     /**
@@ -62,7 +61,7 @@ export class Evaluator {
 		// since the nodes are object references, the originals in the ast
 		// array will get the values.
 		for (let node of orderedNodes) {
-			node.value = this.evalNode(node);
+			node.value = this.evalNode(node, context);
 		}
 
 		// all the nodes are evaluated, so we can join the parts of the
@@ -70,11 +69,19 @@ export class Evaluator {
 		return ast.join('');
 	}
 
-	public evalNode(node : Node) : any {
-		return node.type();
+	public evalNode(node : Node, context : object) : any {
+		return this.getNodeEvaluator(node.type()).evaluate(node, context);
 	}
 
 	public addNodeEvaluator(evaluator : NodeEvaluator) {
+		this.evaluators.set(evaluator.handles(), evaluator);
+	}
+
+	public getNodeEvaluator(type : string) : NodeEvaluator {
+		if (this.evaluators.has(type)) {
+			return this.evaluators.get(type);
+		}
+		throw Error(`No evaluator for node type ${type} found`);
 	}
 
 	private hasNodes(collection: any) {

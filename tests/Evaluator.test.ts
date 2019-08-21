@@ -1,7 +1,7 @@
-import {Evaluator} from '../src/Evaluator';
-import {parse} from 'floip-parser/dist/Parser';
+import EvaluatorFactory from '../src/Evaluator/Factory';
+import { Evaluator } from '../src/Evaluator';
 
-const evaluator = new Evaluator(parse);
+const evaluator : Evaluator = EvaluatorFactory.create();
 
 it('returns a string from an expression', () => {
 	expect(evaluator.evaluate('Hello World', {}))
