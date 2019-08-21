@@ -30,7 +30,7 @@ var MethodNodeEvaluator = /** @class */ (function () {
         var call = method.call;
         var args = method.args.map(this.value).concat(context);
         var handler = this.getHandler(call);
-        return handler[call](args);
+        return handler[call.toLowerCase()](args);
     };
     MethodNodeEvaluator.prototype.value = function (item) {
         if (item instanceof Node_1.default) {

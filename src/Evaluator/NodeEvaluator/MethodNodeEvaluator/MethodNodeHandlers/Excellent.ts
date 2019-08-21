@@ -1,9 +1,10 @@
 import { MethodNodeHandler } from "../..";
+import Node from "../../../Node";
 
 const PUNCTUATION=',:;!?.-'
 
 export default class Excellent implements MethodNodeHandler {
-	handles(): string[] {
+	public handles(): string[] {
 		return [
 			'first_word',
 			'percent',
@@ -18,24 +19,24 @@ export default class Excellent implements MethodNodeHandler {
 		];
 	}
 
-	first_word(string : string) : string {
+	public first_word(string : string) : string {
 		return this.word(string, 1);
 	}
 
-	percent(number : number|string) : string {
+	public percent(number : number|string) : string {
 		return Number(number) * 100 + "%";
 	}
 
-	read_digits($string) {
+	public read_digits(string) {
 		throw new Error('Not implemented');
 	}
 
-	remove_fist_word(string : string) : string {
+	public remove_fist_word(string : string) : string {
 		const word = this.first_word(string);
 		return string.substr(word.length);
 	}
 
-	word(string : string, number : number, bySpaces? :boolean) : string {
+	public word(string : string, number : number, bySpaces? :boolean) : string {
 		const split = bySpaces ? string.split(' ') : this.splitByPunc(string);
 
 		if (number < 0) {
@@ -45,26 +46,85 @@ export default class Excellent implements MethodNodeHandler {
 	}
 
 	private splitByPunc(string : string) : Array<string> {
-		return string.split(/\s*[,:;!?.-]\s*|\s/g)
+		return string.split(/\s*[,:;!?.-]\s*|\s/g).filter(a => a)
 	}
 
-	word_count($string, $bySpaces = null) {
-
+	public word_count(string : string, bySpaces? : boolean) {
+		if (bySpaces) {
+			return string.split(' ').length;
+		}
+		return this.splitByPunc(string).length;
 	}
 
-	word_slice($string, $start, $stop = null, $bySpaces = null) {
+	public word_slice(string : string, start : number, stop? : number, bySpaces? : boolean) {
+		let split = bySpaces ? string.split(' ') : this.splitByPunc(string);
 
+		if (typeof stop === 'undefined') {
+			if (start < 0) {
+				split = split.reverse();
+				++start;
+			} else {
+				--start;
+			}
+			return split.slice(start).join(' ');
+		}
+
+		if (stop > 0) {
+			stop = split.length - (stop - 2);
+		}
+
+		if (start < 0) {
+			split = split.reverse();
+			++start;
+			stop = (split.length - stop + 1);
+		} else {
+			--start;
+			if (stop > 0) {
+				++stop;
+			}
+		}
+
+		return split.slice(start, stop).join(' ');
 	}
 
-	is_number($value) {
-
+	public is_number(value : any) : boolean {
+		if (value instanceof Node) {
+			value = value.value;
+		}
+		if (typeof value === 'number') {
+			return true;
+		}
+		if (typeof value === 'string') {
+			return !isNaN(Number(value));
+		}
+		return false;
 	}
 
-	is_string($value) {
-
+	public is_string(value : any) : boolean {
+		if (value instanceof Node) {
+			value = value.value;
+		}
+		return typeof value === 'string' 
+			&& (isNaN(Number(value)) || value.trim().length === 0)
+			
 	}
 
-	is_bool($value) {
-
+	public is_bool(value : any) : boolean {
+		if (value instanceof Node) {
+			value = value.value;
+		}
+		if (typeof value === 'string') {
+			switch (value) {
+				case 'TRUE' :
+					return true;
+				case 'FALSE' :
+					return true;
+			}
+			return false;
+		}
+		if (typeof value === 'boolean') {
+			return true;
+		}
+		return false;
 	}
 }

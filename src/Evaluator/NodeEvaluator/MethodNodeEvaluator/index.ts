@@ -40,7 +40,7 @@ export class MethodNodeEvaluator implements NodeEvaluator{
 
 		const handler = this.getHandler(call);
 
-		return handler[call](args);
+		return handler[call.toLowerCase()](args);
 	}
 
 	private value(item) {

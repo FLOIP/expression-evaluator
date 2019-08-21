@@ -25,6 +25,13 @@ const wordCountProvider : Array<[string, number]> = [
 	['I.Am,A!Little;Teapot:', 5],
 ];
 
+describe.each(wordCountProvider)(
+	'%#: word_count(%s) : %i)',
+	(string, expected) => {
+		expect(handler.word_count(string)).toBe(expected);
+	}
+)
+
 const firstWordProvider : Array<[string, string]> = [
 	['Foo Bar', 'Foo'],
 	['Foo,Bar', 'Foo'],
@@ -37,14 +44,23 @@ describe.each(firstWordProvider)(
 	(string, expected) => {
 		expect(handler.first_word(string)).toBe(expected);
 	}
-)
+);
 
-const wordSliceProvider : Array<[string, number, number|null, boolean|null, string]> = [
-	['RapidPro expressions are fun', 2, 4, null, 'expressions are'],
-	['RapidPro expressions are fun', 2, null, null, 'expressions are fun'],
-	['RapidPro expressions are fun', 1, -2, null, 'RapidPro expressions'],
-	['RapidPro expressions are fun', -1, 2, null, 'fun']
+const wordSliceProvider : Array<[string, number, number|undefined, boolean|undefined, string]> = [
+	['RapidPro expressions are fun', 2, 4, undefined, 'expressions are'],
+	['RapidPro expressions are fun', 2, undefined, undefined, 'expressions are fun'],
+	['RapidPro expressions are fun', 1, -2, undefined, 'RapidPro expressions'],
+	['RapidPro expressions are fun', -1, 2, undefined, 'fun']
 ];
+
+describe.each(wordSliceProvider)(
+	'%#: word_slice(%s, %i, %i, %s) : %s)',
+	(string, start, stop, bySpaces, expected) => {
+		test('word_slice', () => {
+			expect(handler.word_slice(string, start, stop, bySpaces)).toBe(expected);
+		})
+	}
+);
 
 const isNumberProvider : Array<[any, boolean]> = [
 	[0, true],
@@ -58,6 +74,15 @@ const isNumberProvider : Array<[any, boolean]> = [
 	['TRUE', false]
 ];
 
+describe.each(isNumberProvider)(
+	'%#: is_number(%s, %s) : %s',
+	(input, expected) => {
+		test('is_number', () => {
+			expect(handler.is_number(input)).toBe(expected);
+		})
+	}
+)
+
 const isStringProvider : Array<[any, boolean]> = [
 	['yes', true],
 	['', true],
@@ -69,6 +94,15 @@ const isStringProvider : Array<[any, boolean]> = [
 	['-1', false],
 	[true, false]
 ];
+
+describe.each(isStringProvider)(
+	'%#: is_string(%s, %s) : %s',
+	(input, expected) => {
+		test('is_string', () => {
+			expect(handler.is_string(input)).toBe(expected);
+		})
+	}
+)
 
 const makeNode = (value : any) : Node => {
 	const n = new Node({});
@@ -91,3 +125,12 @@ const isBoolProvider : Array<[any, boolean]> = [
 	[1, false],
 	[-1, false]
 ]
+
+describe.each(isBoolProvider)(
+	'%#: is_bool(%s, %s) : %s',
+	(input, expected) => {
+		test('is_bool', () => {
+			expect(handler.is_bool(input)).toBe(expected);
+		})
+	}
+)

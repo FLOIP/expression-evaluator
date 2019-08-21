@@ -6,7 +6,7 @@ var MemberNodeEvaluator = /** @class */ (function () {
     function MemberNodeEvaluator() {
     }
     MemberNodeEvaluator.prototype.handles = function () {
-        return Expression_1.METHOD_TYPE;
+        return Expression_1.MEMBER_TYPE;
     };
     /**
      * Evaluate the value of a member access node given a context.

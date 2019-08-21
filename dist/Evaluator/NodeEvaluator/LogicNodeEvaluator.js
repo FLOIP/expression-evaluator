@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Expression_1 = require("../../Contract/Expression");
 var Exception_1 = require("./Exception");
 var Node_1 = __importDefault(require("../Node"));
 var LogicNodeEvaluator = /** @class */ (function () {
@@ -32,7 +33,7 @@ var LogicNodeEvaluator = /** @class */ (function () {
         throw new Exception_1.NodeEvaluatorError(operator + " is not a valid logic operator");
     };
     LogicNodeEvaluator.prototype.handles = function () {
-        throw new Error("Method not implemented.");
+        return Expression_1.LOGIC_TYPE;
     };
     LogicNodeEvaluator.prototype.value = function (item) {
         if (item instanceof Node_1.default) {
