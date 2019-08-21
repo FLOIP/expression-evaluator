@@ -33,6 +33,7 @@ var Logical = /** @class */ (function () {
         if (args.length != 3) {
             throw new Exception_1.NodeEvaluatorError();
         }
+        return args[0] ? args[1] : args[2];
     };
     Logical.prototype.or = function () {
         var args = [];

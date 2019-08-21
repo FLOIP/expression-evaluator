@@ -21,6 +21,7 @@ export default class Logical implements MethodNodeHandler {
 		if (args.length != 3) {
 			throw new NodeEvaluatorError()
 		}
+		return args[0] ? args[1] : args[2];
 	}
 
 	public or(...args : any[]) : boolean {
