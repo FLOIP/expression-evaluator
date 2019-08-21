@@ -1,12 +1,12 @@
 import { NodeEvaluator } from ".";
 import Node from '../Node';
-import { Member, METHOD_TYPE } from "../../Contract/Expression";
+import { Member, MEMBER_TYPE } from "../../Contract/Expression";
 import { NodeShapeError } from "./Exception";
 
 export default class MemberNodeEvaluator implements NodeEvaluator {
 
 	handles(): string {
-		return METHOD_TYPE;
+		return MEMBER_TYPE;
 	}
 
 	/**

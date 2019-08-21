@@ -1,5 +1,5 @@
 import { NodeEvaluator } from ".";
-import { Logic } from "../../Contract/Expression";
+import { Logic, LOGIC_TYPE } from "../../Contract/Expression";
 import { NodeShapeError, NodeEvaluatorError } from "./Exception";
 import Node from "../Node";
 
@@ -32,7 +32,7 @@ export default class LogicNodeEvaluator implements NodeEvaluator {
 	}
 	
 	handles(): string {
-		throw new Error("Method not implemented.");
+		return LOGIC_TYPE;
 	}
 
 	private value(item) {
