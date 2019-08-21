@@ -45,3 +45,22 @@ describe.each(ifProvider)(
 		})
 	}
 )
+
+const orProvider : Array<[Array<any>, boolean]> = [
+	[[true, false], true],
+	[[false, true], true],
+	[[false, false, true], true],
+	[[false, false], false],
+	[[makeNode(true), false], true],
+	[[makeNode(false), true], true],
+	[[makeNode(false), false], false]
+]
+
+describe.each(orProvider)(
+	'%#: or(%o) : %s',
+	(args, expected) => {
+		test('or', () => {
+			expect(handler.or(...args)).toBe(expected);
+		})
+	}
+)
