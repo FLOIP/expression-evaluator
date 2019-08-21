@@ -1,0 +1,25 @@
+{
+  "name": "floip-expression-eval",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "author": "Kyle Seifert",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "floip-parser": "bitbucket:voto/floip-expression-evaluator#v1.3.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.17",
+    "@types/node": "^12.7.1",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "tsc": "^1.20150623.0",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3"
+  },
+  "private": true
+}
