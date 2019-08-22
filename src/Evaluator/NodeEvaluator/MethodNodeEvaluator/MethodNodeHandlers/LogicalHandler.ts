@@ -1,8 +1,8 @@
-import { MethodNodeHandler } from "../..";
 import Node from "../../../Node";
 import { NodeEvaluatorError } from "../../Exception";
+import AbstracetNodeHandler from "./AbstractNodeHandler";
 
-export default class Logical implements MethodNodeHandler {
+export default class LogicalHandler extends AbstracetNodeHandler {
 	public handles(): string[] {
 		throw new Error("Method not implemented.");
 	}
@@ -37,7 +37,7 @@ export default class Logical implements MethodNodeHandler {
 		return (/boolean|number|string/).test(typeof item);
 	}
 
-	private value(item : any) : boolean {
+	protected value(item : any) : boolean {
 		if (item instanceof Node) {
 			let val = item.value;
 			if (typeof val === 'string') {

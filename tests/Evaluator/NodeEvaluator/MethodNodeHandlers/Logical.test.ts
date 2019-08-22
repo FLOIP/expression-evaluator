@@ -1,4 +1,4 @@
-import Logical from '../../../../src/Evaluator/NodeEvaluator/MethodNodeEvaluator/MethodNodeHandlers/Logical'
+import Logical from '../../../../src/Evaluator/NodeEvaluator/MethodNodeEvaluator/MethodNodeHandlers/LogicalHandler'
 import Node from '../../../../src/Evaluator/Node';
 
 const handler = new Logical;

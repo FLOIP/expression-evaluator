@@ -3,7 +3,7 @@ import Node from "../../../Node";
 
 const PUNCTUATION=',:;!?.-'
 
-export default class Excellent implements MethodNodeHandler {
+export default class ExcellentHandler implements MethodNodeHandler {
 	public handles(): string[] {
 		return [
 			'first_word',

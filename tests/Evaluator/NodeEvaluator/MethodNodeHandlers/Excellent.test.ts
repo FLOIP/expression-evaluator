@@ -1,7 +1,7 @@
-import Excellent from "../../../../src/Evaluator/NodeEvaluator/MethodNodeEvaluator/MethodNodeHandlers/Excellent";
+import ExcellentHandler from "../../../../src/Evaluator/NodeEvaluator/MethodNodeEvaluator/MethodNodeHandlers/ExcellentHandler";
 import Node from "../../../../src/Evaluator/Node";
 
-const handler = new Excellent;
+const handler = new ExcellentHandler;
 
 const wordProvider : Array<[string, number, boolean, string]> = [
 	['hello cow-boy', 2, false, 'cow'],
