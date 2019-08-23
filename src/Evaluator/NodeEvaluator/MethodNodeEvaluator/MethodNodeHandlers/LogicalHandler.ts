@@ -1,10 +1,14 @@
 import Node from "../../../Node";
 import { NodeEvaluatorError } from "../../Exception";
-import AbstracetNodeHandler from "./AbstractNodeHandler";
+import AbstractNodeHandler from "./AbstractNodeHandler";
 
-export default class LogicalHandler extends AbstracetNodeHandler {
+export default class LogicalHandler extends AbstractNodeHandler {
 	public handles(): string[] {
-		throw new Error("Method not implemented.");
+		return [
+			'and',
+			'if',
+			'or',
+		]
 	}
 
 	public and(...args : any[]) : boolean {

@@ -4,7 +4,7 @@ import Node from "../../Node";
 import { NodeShapeError } from "../Exception";
 
 export interface MethodNodeHandler {
-	handles() : Array<String>;
+	handles() : Array<string>;
 }
 
 export class MethodNodeEvaluator implements NodeEvaluator{

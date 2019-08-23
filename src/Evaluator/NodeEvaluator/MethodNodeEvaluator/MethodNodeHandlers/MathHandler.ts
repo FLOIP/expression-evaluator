@@ -1,7 +1,7 @@
-import AbstracetNodeHandler from "./AbstractNodeHandler";
+import AbstractNodeHandler from "./AbstractNodeHandler";
 import Node from "../../../Node";
 
-export default class MathHandler extends AbstracetNodeHandler {
+export default class MathHandler extends AbstractNodeHandler {
 	public handles(): string[] {
 		return [
 			'abs',
