@@ -2,7 +2,7 @@ import AbstracetNodeHandler from "./AbstractNodeHandler";
 import Node from "../../../Node";
 
 export default class MathHandler extends AbstracetNodeHandler {
-	handles(): string[] {
+	public handles(): string[] {
 		return [
 			'abs',
 			'max',
