@@ -18,12 +18,12 @@ export default class MathHandler extends AbstractNodeHandler {
 
 	public max(...args : [number|Node]) {
 		//@ts-ignore
-		return Math.max(...(args.map(this.value)));
+		return Math.max(...(args.map(this.value).filter(x => !isNaN(x))));
 	}
 
 	public min(...args : [number|Node]) {
 		//@ts-ignore
-		return Math.min(...(args.map(this.value)));
+		return Math.min(...(args.map(this.value).filter(x => !isNaN(x))));
 	}
 
 	public power(number : number|Node, power : number|Node) {
@@ -32,7 +32,11 @@ export default class MathHandler extends AbstractNodeHandler {
 
 	public sum(...args : [number|Node]) {
 		//@ts-ignore
-		return args.map(this.value)
+		return args.map(this.value).filter(x => !isNaN(x))
 			       .reduce((carry, n) => carry += Number(n));
+	}
+
+	protected value(item : any) {
+		return Number(super.value(item));
 	}
 }

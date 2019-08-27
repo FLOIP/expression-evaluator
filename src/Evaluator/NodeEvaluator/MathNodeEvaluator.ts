@@ -42,7 +42,7 @@ export default class MathNodeEvaluator implements NodeEvaluator {
 	}
 
 	private typeGuard(math : MathExpression) {
-		for (let key of ['rhs, lhs']) {
+		for (let key of ['rhs', 'lhs', 'operator']) {
 			if (!(key in math)) {
 				throw new NodeShapeError('Math node is the wrong shape, should have "rhs", "lhs", "operator"');
 			}

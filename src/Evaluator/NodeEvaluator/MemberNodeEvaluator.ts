@@ -29,7 +29,7 @@ export default class MemberNodeEvaluator implements NodeEvaluator {
 
 		const element = context[data.key];
 
-		if (typeof data.value === 'undefined') {
+		if (typeof data.value === 'undefined' || data.value === null) {
 			// return the __value__ element of the context, or else the whole
 			// context serialized
 			if ('__value__' in element) {

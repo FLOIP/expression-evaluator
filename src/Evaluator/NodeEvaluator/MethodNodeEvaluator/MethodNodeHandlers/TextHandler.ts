@@ -29,7 +29,7 @@ export default class TextHandler extends AbstractNodeHandler {
 
 	public clean(string : string|Node) : string {
 		return String(string)
-			.replace(/[\x00-\x1F\x7F]/, '');
+			.replace(/[^ -~]+/, '');
 	}
 
 	public code(string : string|Node) : number {
@@ -38,11 +38,14 @@ export default class TextHandler extends AbstractNodeHandler {
 	}
 
 	public concatenate(...args : [string|Node]) : string {
-		return args.map(String)
+		return args.filter(this.isScalar).map(String)
 		           .reduce((carry, s) => carry + String(s));
 	}
 
 	public fixed(number : number|Node, decimals : number|Node = 0, commas : boolean|Node = false) : string {
+		if (typeof commas === 'object') { // if context is 3rd param
+			commas = false;
+		}
 		const n = number.toString()
 			.match(new RegExp("^-?\\d+(?:\\.\\d{0," + decimals + "})?", "g"));
 
@@ -68,7 +71,7 @@ export default class TextHandler extends AbstractNodeHandler {
 	}
 
 	public proper(string : string|Node) {
-		string = String(string);
+		string = String(string).toLowerCase();
 		const reg = /\b\w/mg; // match words
 		let match;
 		while ((match = reg.exec(string)) !== null) {
@@ -92,6 +95,9 @@ export default class TextHandler extends AbstractNodeHandler {
 	}
 
 	public substitute(string : string|Node, old : string|Node, replace : string|Node, instances : number|null = null) {
+		if (typeof instances === 'object') {
+			instances = null;
+		}
 		string = String(string);
 		old = String(old);
 		replace = String(replace);

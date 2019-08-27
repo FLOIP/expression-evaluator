@@ -37,10 +37,6 @@ export default class LogicalHandler extends AbstractNodeHandler {
 		return false;
 	}
 
-	private isScalar(item : any) : boolean {
-		return (/boolean|number|string/).test(typeof item);
-	}
-
 	protected value(item : any) : boolean {
 		if (item instanceof Node) {
 			let val = item.value;

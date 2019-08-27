@@ -33,6 +33,10 @@ export interface Escape extends Expression {
 	//
 }
 
+export interface Null extends Expression {
+	//
+}
+
 export interface Logic extends Expression {
 	lhs: any,
 	rhs: any,
@@ -58,6 +62,8 @@ export class ExpressionFactory {
 				return data as Logic;
 			case 'ESCAPE':
 				return data as Escape;
+			case 'NULL':
+				return data as Null;
 			case 'CONCATENATE':
 				return data as Concatenate;
 		}
@@ -70,5 +76,6 @@ export const MEMBER_TYPE = 'MEMBER';
 export const MATH_TYPE = 'MATH';
 export const LOGIC_TYPE = 'LOGIC';
 export const ESCAPE_TYPE = 'ESCAPE';
+export const NULL_TYPE = 'NULL';
 export const CONCATENATE_TYPE = 'CONCATENATE';
 export const IDENTIFIER = '@';

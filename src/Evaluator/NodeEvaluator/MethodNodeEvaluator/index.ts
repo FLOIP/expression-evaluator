@@ -16,7 +16,7 @@ export class MethodNodeEvaluator implements NodeEvaluator{
 	}
 
 	public addHandler(handler: MethodNodeHandler) {
-		for (let method in handler.handles()) {
+		for (let method of handler.handles()) {
 			this.handlers.set(method, handler);
 		}
 		return this;
@@ -35,12 +35,12 @@ export class MethodNodeEvaluator implements NodeEvaluator{
 		
 		this.typeGuard(method);
 
-		const call = method.call;
+		const call = method.call.toLowerCase();
 		const args = method.args.map(this.value).concat(context);
 
 		const handler = this.getHandler(call);
 
-		return handler[call.toLowerCase()](args);
+		return handler[call](...args);
 	}
 
 	private value(item) {

@@ -9,8 +9,16 @@ export default class LogicNodeEvaluator implements NodeEvaluator {
 
 		this.typeGuard(data);
 
-		const lhs = this.value(data.lhs);
-		const rhs = this.value(data.rhs);
+		let lhs = this.value(data.lhs);
+		let rhs = this.value(data.rhs);
+
+		if (!isNaN(lhs)) {
+			lhs = Number(lhs);
+		}
+		if (!isNaN(rhs)) {
+			rhs = Number(rhs);
+		}
+
 		const operator = data.operator;
 
 		switch(operator) {
@@ -51,7 +59,7 @@ export default class LogicNodeEvaluator implements NodeEvaluator {
 	}
 
 	private typeGuard(logic : Logic) {
-		for (let key of ['rhs, lhs', 'operator']) {
+		for (let key of ['rhs' , 'lhs', 'operator']) {
 			if (!(key in logic)) {
 				throw new NodeShapeError('Logic node is the wrong shape, should have "rhs", "lhs", "operator"');
 			}

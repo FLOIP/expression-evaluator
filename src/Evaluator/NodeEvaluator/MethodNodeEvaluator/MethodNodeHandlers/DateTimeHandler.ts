@@ -23,7 +23,7 @@ export default class DateTimeHandler extends AbstractNodeHandler {
 	}
 
 	public date(year : number|Node, month: number|Node, day: number|Node) : Moment {
-		return moment(new Date(Number(year), Number(month), Number(day)));
+		return moment(new Date(Number(year), Number(month) - 1, Number(day)));
 	}
 
 	public date_value(dateString : string|Node) : Moment {
@@ -31,7 +31,7 @@ export default class DateTimeHandler extends AbstractNodeHandler {
 	}
 
 	public day(datetime : string|Node) : number {
-		return moment(String(datetime)).day();
+		return moment(this.value(datetime)).date();
 	}
 
 	public edate(datetime : string|Node, months : number|Node) : Moment {
@@ -48,7 +48,7 @@ export default class DateTimeHandler extends AbstractNodeHandler {
 	}
 
 	public month(datetime : string|Node) : number {
-		return moment(String(datetime)).month();
+		return moment(this.value(datetime)).month() + 1;
 	}
 
 	public now() : Moment {
@@ -76,6 +76,14 @@ export default class DateTimeHandler extends AbstractNodeHandler {
 	}
 
 	public year(date : string|Node) : number {
-		return moment(String(date)).year();
+		return moment(this.value(date)).year();
+	}
+
+	protected value(item : any) : string|Moment {
+		const v = super.value(item);
+		if (moment.isMoment(item)) {
+			return item;
+		}
+		return String(item);
 	}
 }

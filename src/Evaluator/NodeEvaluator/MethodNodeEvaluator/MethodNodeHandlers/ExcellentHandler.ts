@@ -16,6 +16,9 @@ export default class ExcellentHandler implements MethodNodeHandler {
 			'is_number',
 			'is_string',
 			'is_bool',
+			'isbool',
+			'isnumber',
+			'isstring'
 		];
 	}
 
@@ -126,5 +129,17 @@ export default class ExcellentHandler implements MethodNodeHandler {
 			return true;
 		}
 		return false;
+	}
+
+	public isnumber(value: any) : boolean {
+		return this.is_number(value);
+	}
+
+	public isbool(value: any) : boolean {
+		return this.is_bool(value);
+	}
+
+	public isstring(value: any) : boolean {
+		return this.is_string(value);
 	}
 }

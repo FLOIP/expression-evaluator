@@ -37,7 +37,7 @@ export class Evaluator {
 				break;
 			}
 
-			// push the node onto the front of our stack
+			// push the node to the stack
 			orderedNodes.unshift(node);
 
 			// check the node for any child nodes
@@ -45,15 +45,20 @@ export class Evaluator {
 				let prop = node.data[n];
 				// add child nodes to our list of children to evaluate
 				if (Node.isNode(prop) || prop instanceof Node) {
-					nodes.unshift(new Node(prop))
+					const child = new Node(prop);
+					nodes.unshift(child)
+					node.data[n] = child;
 				} else if (this.hasNodes(prop)) {
 					for (let i = 0; i < prop.length; ++i) {
 						if (Node.isNode(prop[i])) {
-							nodes.unshift(new Node(prop[i]));
+							// replace the child node struct with a node object
+							const child = new Node(prop[i]);
+							prop[i] = child;
+							// add that node to the stack
+							nodes.unshift(child);
 						}
 					}
 				}
-				
 			}
 		}
 
@@ -66,10 +71,10 @@ export class Evaluator {
 
 		// all the nodes are evaluated, so we can join the parts of the
 		// expression together.
-		return ast.join('');
+		return ast.map(x => x.toString()).join('');
 	}
 
-	public evalNode(node : Node, context : object) : any {
+	private evalNode(node : Node, context : object) : any {
 		return this.getNodeEvaluator(node.type()).evaluate(node, context);
 	}
 

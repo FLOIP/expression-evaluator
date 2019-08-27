@@ -25,6 +25,9 @@ export default class Node {
 		if (typeof this.value === 'boolean') {
 			return this.value ? 'TRUE' : 'FALSE';
 		}
+		if (this.value === null) {
+			return 'NULL';
+		}
 		return this.value;
 	}
 }

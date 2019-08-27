@@ -27,7 +27,7 @@ export default class ConcatenateNodeEvaluator implements NodeEvaluator {
 	}
 
 	private typeGuard(concatenate : Concatenate) {
-		for (let key of ['rhs, lhs']) {
+		for (let key of ['rhs', 'lhs']) {
 			if (!(key in concatenate)) {
 				throw new NodeShapeError('Concatenation node is the wrong shape, should have "rhs", "lhs"');
 			}
