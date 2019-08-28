@@ -7,6 +7,7 @@ import MathNodeEvaluator from "./NodeEvaluator/MathNodeEvaluator";
 import EscapeNodeEvaluator from "./NodeEvaluator/EscapeNodeEvaluator";
 import ConcatenateNodeEvaluator from "./NodeEvaluator/ConcatenateNodeEvaluator";
 import MethodNodeEvaluatorFactory from "./NodeEvaluator/MethodNodeEvaluator/Factory";
+import NullNodeEvaluator from "./NodeEvaluator/NullNodeEvaluator";
 
 export default class EvaluatorFactory {
 	public static create(nodeEvaluators : Array<NodeEvaluator> = []) : Evaluator {
@@ -28,6 +29,7 @@ export default class EvaluatorFactory {
 			new MathNodeEvaluator,
 			new EscapeNodeEvaluator,
 			new ConcatenateNodeEvaluator,
+			new NullNodeEvaluator,
 		];
 	}
 }
