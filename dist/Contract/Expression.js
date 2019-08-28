@@ -15,6 +15,8 @@ var ExpressionFactory = /** @class */ (function () {
                 return data;
             case 'ESCAPE':
                 return data;
+            case 'NULL':
+                return data;
             case 'CONCATENATE':
                 return data;
         }
@@ -28,6 +30,7 @@ exports.MEMBER_TYPE = 'MEMBER';
 exports.MATH_TYPE = 'MATH';
 exports.LOGIC_TYPE = 'LOGIC';
 exports.ESCAPE_TYPE = 'ESCAPE';
+exports.NULL_TYPE = 'NULL';
 exports.CONCATENATE_TYPE = 'CONCATENATE';
 exports.IDENTIFIER = '@';
 //# sourceMappingURL=Expression.js.map

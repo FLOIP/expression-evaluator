@@ -12,7 +12,8 @@ var MethodNodeEvaluator = /** @class */ (function () {
         this.handlers = new Map();
     }
     MethodNodeEvaluator.prototype.addHandler = function (handler) {
-        for (var method in handler.handles()) {
+        for (var _i = 0, _a = handler.handles(); _i < _a.length; _i++) {
+            var method = _a[_i];
             this.handlers.set(method, handler);
         }
         return this;
@@ -27,10 +28,10 @@ var MethodNodeEvaluator = /** @class */ (function () {
     MethodNodeEvaluator.prototype.evaluate = function (node, context) {
         var method = node.data;
         this.typeGuard(method);
-        var call = method.call;
+        var call = method.call.toLowerCase();
         var args = method.args.map(this.value).concat(context);
         var handler = this.getHandler(call);
-        return handler[call.toLowerCase()](args);
+        return handler[call].apply(handler, args);
     };
     MethodNodeEvaluator.prototype.value = function (item) {
         if (item instanceof Node_1.default) {

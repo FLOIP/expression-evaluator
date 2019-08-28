@@ -41,7 +41,7 @@ var MathNodeEvaluator = /** @class */ (function () {
         throw new Exception_1.NodeEvaluatorError("Can only perform math on numbers, got " + item);
     };
     MathNodeEvaluator.prototype.typeGuard = function (math) {
-        for (var _i = 0, _a = ['rhs, lhs']; _i < _a.length; _i++) {
+        for (var _i = 0, _a = ['rhs', 'lhs', 'operator']; _i < _a.length; _i++) {
             var key = _a[_i];
             if (!(key in math)) {
                 throw new Exception_1.NodeShapeError('Math node is the wrong shape, should have "rhs", "lhs", "operator"');

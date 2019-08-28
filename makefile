@@ -3,13 +3,13 @@
 install: node_modules
 
 node_modules: package.json
-	npm install
+	yarn install
 
 build: src node_modules
-	npx tsc
+	yarn build
 
 watch: src
-	npx tsc -w
+	yarn watch
 
 clean:
 	rm -rf node_modules

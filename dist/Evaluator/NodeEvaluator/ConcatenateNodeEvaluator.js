@@ -26,7 +26,7 @@ var ConcatenateNodeEvaluator = /** @class */ (function () {
         return Expression_1.CONCATENATE_TYPE;
     };
     ConcatenateNodeEvaluator.prototype.typeGuard = function (concatenate) {
-        for (var _i = 0, _a = ['rhs, lhs']; _i < _a.length; _i++) {
+        for (var _i = 0, _a = ['rhs', 'lhs']; _i < _a.length; _i++) {
             var key = _a[_i];
             if (!(key in concatenate)) {
                 throw new Exception_1.NodeShapeError('Concatenation node is the wrong shape, should have "rhs", "lhs"');

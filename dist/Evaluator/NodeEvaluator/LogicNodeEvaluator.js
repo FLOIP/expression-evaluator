@@ -14,6 +14,12 @@ var LogicNodeEvaluator = /** @class */ (function () {
         this.typeGuard(data);
         var lhs = this.value(data.lhs);
         var rhs = this.value(data.rhs);
+        if (!isNaN(lhs)) {
+            lhs = Number(lhs);
+        }
+        if (!isNaN(rhs)) {
+            rhs = Number(rhs);
+        }
         var operator = data.operator;
         switch (operator) {
             case '<':
@@ -50,7 +56,7 @@ var LogicNodeEvaluator = /** @class */ (function () {
         return item;
     };
     LogicNodeEvaluator.prototype.typeGuard = function (logic) {
-        for (var _i = 0, _a = ['rhs, lhs', 'operator']; _i < _a.length; _i++) {
+        for (var _i = 0, _a = ['rhs', 'lhs', 'operator']; _i < _a.length; _i++) {
             var key = _a[_i];
             if (!(key in logic)) {
                 throw new Exception_1.NodeShapeError('Logic node is the wrong shape, should have "rhs", "lhs", "operator"');

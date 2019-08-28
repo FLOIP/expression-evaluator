@@ -32,19 +32,25 @@ var Evaluator = /** @class */ (function () {
             if (typeof node === 'undefined') {
                 break;
             }
-            // push the node onto the front of our stack
+            // push the node to the stack
             orderedNodes.unshift(node);
             // check the node for any child nodes
             for (var n in node.data) {
                 var prop = node.data[n];
                 // add child nodes to our list of children to evaluate
                 if (Node_1.default.isNode(prop) || prop instanceof Node_1.default) {
-                    nodes.unshift(new Node_1.default(prop));
+                    var child = new Node_1.default(prop);
+                    nodes.unshift(child);
+                    node.data[n] = child;
                 }
                 else if (this.hasNodes(prop)) {
                     for (var i = 0; i < prop.length; ++i) {
                         if (Node_1.default.isNode(prop[i])) {
-                            nodes.unshift(new Node_1.default(prop[i]));
+                            // replace the child node struct with a node object
+                            var child = new Node_1.default(prop[i]);
+                            prop[i] = child;
+                            // add that node to the stack
+                            nodes.unshift(child);
                         }
                     }
                 }
@@ -59,7 +65,7 @@ var Evaluator = /** @class */ (function () {
         }
         // all the nodes are evaluated, so we can join the parts of the
         // expression together.
-        return ast.join('');
+        return ast.map(function (x) { return x.toString(); }).join('');
     };
     Evaluator.prototype.evalNode = function (node, context) {
         return this.getNodeEvaluator(node.type()).evaluate(node, context);

@@ -1,0 +1,1 @@
+{"version":3,"file":"NullNodeEvaluator.js","sourceRoot":"","sources":["../../../src/Evaluator/NodeEvaluator/NullNodeEvaluator.ts"],"names":[],"mappings":";;AACA,wDAAsD;AAGtD;IAAA;IAQA,CAAC;IAPG,mCAAO,GAAP;QACI,OAAO,sBAAS,CAAC;IACrB,CAAC;IAED,oCAAQ,GAAR,UAAS,IAAU,EAAE,OAAe;QAChC,OAAO,IAAI,CAAC;IAChB,CAAC;IACL,wBAAC;AAAD,CAAC,AARD,IAQC"}
