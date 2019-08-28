@@ -1,6 +1,6 @@
 {
   "name": "floip-expression-evaluator-ts",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
