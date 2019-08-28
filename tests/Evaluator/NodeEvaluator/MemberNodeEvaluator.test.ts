@@ -5,28 +5,76 @@ import Node from '../../../src/Evaluator/Node';
 
 const evaluator : NodeEvaluator = new MemberNodeEvaluator;
 
-const keysAndValuesProvider : Array<Array<Object|String>> = [
+const makeNode = (key : string, value : string|null) => {
+	return new Node({
+		type: MEMBER_TYPE,
+		key,
+		value,
+	});
+}
+
+const keysAndValuesProvider : Array<[Node, object, string]> = [
 	[
-		{
-			type: MEMBER_TYPE,
-			key: 'contact',
-			value: 'name',
-		},
+		makeNode('contact', 'name'),
 		{
 			contact: {
 				name: 'Kyle'
 			}
 		},
 		'Kyle'
-	]
+	],
 ];
 
-
 describe.each(keysAndValuesProvider)(
-	'evaluates member nodes with key and value',
-	(data, context, expected) => {
+	'%#: node: %o context: %o => %s',
+	(node, context, expected) => {
 		it('evaluates member node with key and value', () => {
-			expect(evaluator.evaluate(new Node(data), context)).toEqual(expected);
+			expect(evaluator.evaluate(node, context)).toEqual(expected);
 		});
 	},
-  );
+);
+
+const keysNoValueProvider : Array<[Node, object, string]> = [
+	[
+		makeNode('contact', null),
+		{
+			contact: {
+				name: 'Kyle',
+				foo: 'bar'
+			}
+		},
+		'{"name":"Kyle","foo":"bar"}'
+	]
+]
+
+describe.each(keysNoValueProvider)(
+	'%#: node: %o context: %o => %s',
+	(node, context, expected) => {
+		it('evaluates member node with key and no value', () => {
+			expect(evaluator.evaluate(node, context)).toEqual(expected);
+		})
+	}
+)
+
+const keysDefaultValueProvider : Array<[Node, object, string]> = [
+	[
+		makeNode('contact', null),
+		{
+			contact: {
+				name: 'Kyle',
+				foo: 'bar',
+				__value__: 'Some Guy'
+			}
+		},
+		'Some Guy'
+	]
+]
+
+describe.each(keysDefaultValueProvider)(
+	'%#: node: %o context: %o => %s',
+	(node, context, expected) => {
+		it('evaluates member node with key and default value', () => {
+			expect(evaluator.evaluate(node, context)).toEqual(expected);
+		})
+	}
+)
