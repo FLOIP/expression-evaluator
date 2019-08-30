@@ -12,7 +12,7 @@
   "author": "Kyle Seifert",
   "license": "UNLICENSED",
   "dependencies": {
-    "floip-parser": "bitbucket:voto/floip-expression-evaluator#semver:v1",
+    "floip-parser": "https://bitbucket.org/voto/floip-expression-evaluator#semver:v1",
     "moment": "^2.24.0"
   },
   "devDependencies": {
