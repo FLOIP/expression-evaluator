@@ -3,10 +3,21 @@ import { ParseFunction } from 'floip-parser/dist/Parser';
 import Node from './Node';
 import { NodeEvaluator } from './NodeEvaluator';
 
+/**
+ * The Evaluator evaluates flow expressions and context.
+ * Expressions may be composed of many different node types as well as plain
+ * strings. To deal with the different node types, the Evaluator delegates the
+ * evaluation of each type to NodeEvaluators, which can be added to an Evaluator
+ * instance.
+ * The Evaluator's resonsibility is consuming an abstract syntax tree from the
+ * flow expression parser, so that the evaluation of the tree can be delegated
+ * to the specialized NodeEvaluators.
+ */
 export class Evaluator {
 	private evaluators: Map<string, any> = new Map();
 
 	constructor(private parse: ParseFunction) {
+		//
 	}
 
     /**
@@ -22,27 +33,43 @@ export class Evaluator {
      * @return The evaluated expression.
      */
 	public evaluate(expression: string, context: object) : string {
-		let ast: [any] = this.parse(expression)
+		// parse our AST and map anything that looks like a node to a node object
+		const ast: [any] = this.parse(expression)
 			.map(item => Node.isNode(item) ? new Node(item) : item);
 
-		// we want to evaluate all nodes that are objects
-		let nodes : Array<Node> = ast.filter(item => item instanceof Node);
-		
-		let orderedNodes : Array<Node> = [];
+		// we want to order the nodes depth-first
+		// this is because nodes may contain other nodes as values, so in order
+		// to evaluate parent nodes, their children must be evaluated first.
+		const orderedNodes = this.sortNodesDepthFirst(ast.filter(item => item instanceof Node));
+
+		// now evaluate all of the nodes in our depth-first array
+		// since the nodes are object references, the originals in the ast
+		// array will get the values.
+		for (let node of orderedNodes) {
+			node.value = this.getNodeEvaluator(node.type()).evaluate(node, context);
+		}
+
+		// all the nodes are evaluated, so we can join the parts of the
+		// expression together.
+		return ast.map(x => x.toString()).join('');
+	}
+
+	private sortNodesDepthFirst(nodes : Array<Node>) : Array<Node> {
+		const nodeStack : Array<Node> = [];
 
 		while (nodes.length) {
-			let node = nodes.shift();
+			const node = nodes.shift();
 
 			if (typeof node === 'undefined') {
 				break;
 			}
 
 			// push the node to the stack
-			orderedNodes.unshift(node);
+			nodeStack.unshift(node);
 
 			// check the node for any child nodes
 			for (let n in node.data) {
-				let prop = node.data[n];
+				const prop = node.data[n];
 				// add child nodes to our list of children to evaluate
 				if (Node.isNode(prop) || prop instanceof Node) {
 					const child = new Node(prop);
@@ -62,26 +89,23 @@ export class Evaluator {
 			}
 		}
 
-		// now evaluate all of the nodes in our depth-first array
-		// since the nodes are object references, the originals in the ast
-		// array will get the values.
-		for (let node of orderedNodes) {
-			node.value = this.evalNode(node, context);
-		}
-
-		// all the nodes are evaluated, so we can join the parts of the
-		// expression together.
-		return ast.map(x => x.toString()).join('');
+		return nodeStack;
 	}
 
-	private evalNode(node : Node, context : object) : any {
-		return this.getNodeEvaluator(node.type()).evaluate(node, context);
-	}
-
+	/**
+     * @param evaluator The node evaluator to add
+     * @see Contact\Expression for node types
+     * @return This expression evaluator
+     */
 	public addNodeEvaluator(evaluator : NodeEvaluator) {
 		this.evaluators.set(evaluator.handles(), evaluator);
 	}
 
+	/**
+	 * @param type The type of the node evaluator to return
+	 * @return The node evaluator associated with the passed type
+	 * @throws Error when no evaluator was associated with the passed type
+	 */
 	public getNodeEvaluator(type : string) : NodeEvaluator {
 		if (this.evaluators.has(type)) {
 			return this.evaluators.get(type);

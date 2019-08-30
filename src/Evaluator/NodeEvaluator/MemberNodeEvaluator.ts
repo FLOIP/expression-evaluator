@@ -20,6 +20,9 @@ export default class MemberNodeEvaluator implements NodeEvaluator {
 
 		this.typeGuard(data);
 
+		// the requested object does not exist in the context, so just
+		// return the key/value that was requested as they were entered in
+		// the expression (e.g. return 'contact.name')
 		if (!(data.key in context)) {
 			if (data.value) {
 				return `${data.key}.${data.value}`
