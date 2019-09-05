@@ -4,11 +4,19 @@ var Node = /** @class */ (function () {
     function Node(data) {
         this.data = data;
     }
+    /**
+     * Check if an object looks like a node structure.
+     * @param item Some item to check
+     */
     Node.isNode = function (item) {
         return typeof item === 'object'
             && item !== null
             && item.hasOwnProperty('type');
     };
+    /**
+     * Return the type of this node.
+     * @see Contract\Expression for node types.
+     */
     Node.prototype.type = function () {
         return this.data.type;
     };

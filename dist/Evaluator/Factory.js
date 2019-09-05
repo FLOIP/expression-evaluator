@@ -11,6 +11,7 @@ var MathNodeEvaluator_1 = __importDefault(require("./NodeEvaluator/MathNodeEvalu
 var EscapeNodeEvaluator_1 = __importDefault(require("./NodeEvaluator/EscapeNodeEvaluator"));
 var ConcatenateNodeEvaluator_1 = __importDefault(require("./NodeEvaluator/ConcatenateNodeEvaluator"));
 var Factory_1 = __importDefault(require("./NodeEvaluator/MethodNodeEvaluator/Factory"));
+var NullNodeEvaluator_1 = __importDefault(require("./NodeEvaluator/NullNodeEvaluator"));
 var EvaluatorFactory = /** @class */ (function () {
     function EvaluatorFactory() {
     }
@@ -31,6 +32,7 @@ var EvaluatorFactory = /** @class */ (function () {
             new MathNodeEvaluator_1.default,
             new EscapeNodeEvaluator_1.default,
             new ConcatenateNodeEvaluator_1.default,
+            new NullNodeEvaluator_1.default,
         ];
     };
     return EvaluatorFactory;
