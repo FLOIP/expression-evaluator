@@ -4,19 +4,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var _1 = require(".");
-var Parser_1 = require("floip-parser/dist/Parser");
+var floip_parser_1 = require("floip-parser");
 var MemberNodeEvaluator_1 = __importDefault(require("./NodeEvaluator/MemberNodeEvaluator"));
 var LogicNodeEvaluator_1 = __importDefault(require("./NodeEvaluator/LogicNodeEvaluator"));
 var MathNodeEvaluator_1 = __importDefault(require("./NodeEvaluator/MathNodeEvaluator"));
 var EscapeNodeEvaluator_1 = __importDefault(require("./NodeEvaluator/EscapeNodeEvaluator"));
 var ConcatenateNodeEvaluator_1 = __importDefault(require("./NodeEvaluator/ConcatenateNodeEvaluator"));
 var Factory_1 = __importDefault(require("./NodeEvaluator/MethodNodeEvaluator/Factory"));
+var NullNodeEvaluator_1 = __importDefault(require("./NodeEvaluator/NullNodeEvaluator"));
 var EvaluatorFactory = /** @class */ (function () {
     function EvaluatorFactory() {
     }
     EvaluatorFactory.create = function (nodeEvaluators) {
         if (nodeEvaluators === void 0) { nodeEvaluators = []; }
-        var evaluator = new _1.Evaluator(Parser_1.parse);
+        var evaluator = new _1.Evaluator(floip_parser_1.parse);
         EvaluatorFactory
             .defaultEvaluators()
             .concat(nodeEvaluators)
@@ -31,6 +32,7 @@ var EvaluatorFactory = /** @class */ (function () {
             new MathNodeEvaluator_1.default,
             new EscapeNodeEvaluator_1.default,
             new ConcatenateNodeEvaluator_1.default,
+            new NullNodeEvaluator_1.default,
         ];
     };
     return EvaluatorFactory;

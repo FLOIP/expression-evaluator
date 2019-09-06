@@ -6,5 +6,6 @@ pipelines:
         caches:
           - node
         script:
-          - npm install
-          - npm test
+          - git config --global url."git@bitbucket.org:".insteadOf https://bitbucket.org/
+          - yarn install
+          - yarn test

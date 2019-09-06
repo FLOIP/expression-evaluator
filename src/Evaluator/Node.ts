@@ -8,13 +8,21 @@ export default class Node {
 		this.data = data as Expression;
 	}
 
-	public static isNode(item: any) {
+	/**
+	 * Check if an object looks like a node structure.
+	 * @param item Some item to check
+	 */
+	public static isNode(item: any) : boolean {
 		return typeof item === 'object'
 		&& item !== null 
 		&& item.hasOwnProperty('type');
 	}
 
-	public type() {
+	/**
+	 * Return the type of this node.
+	 * @see Contract\Expression for node types.
+	 */
+	public type() : string {
 		return this.data.type;
 	}
 

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Node_1 = __importDefault(require("../Node"));
 var Expression_1 = require("../../Contract/Expression");
 var Exception_1 = require("./Exception");
+var moment_1 = __importDefault(require("moment"));
 var MathNodeEvaluator = /** @class */ (function () {
     function MathNodeEvaluator() {
     }
@@ -15,6 +16,17 @@ var MathNodeEvaluator = /** @class */ (function () {
         var lhs = this.value(data.lhs);
         var rhs = this.value(data.rhs);
         var operator = data.operator;
+        // special handling for math operations on dates
+        if (typeof lhs === 'object' || typeof rhs === 'object') {
+            if (moment_1.default.isMoment(lhs)) {
+                if (moment_1.default.isDuration(rhs)) {
+                    return this.evaluateDateMath(lhs, rhs, operator);
+                }
+                // can only add durations to dates
+                throw new Exception_1.NodeEvaluatorError("When lhs of equation is a date, rhs, must be a duration, got " + typeof rhs);
+            }
+            throw new Exception_1.NodeEvaluatorError("Can only perform math on numbers or date/time, got " + typeof lhs + " and " + typeof rhs);
+        }
         switch (operator) {
             case '+':
                 return lhs + rhs;
@@ -28,12 +40,24 @@ var MathNodeEvaluator = /** @class */ (function () {
                 return Math.pow(lhs, rhs);
         }
     };
+    MathNodeEvaluator.prototype.evaluateDateMath = function (lhs, rhs, operator) {
+        switch (operator) {
+            case '+':
+                return lhs.add(rhs);
+            case '-':
+                return lhs.subtract(rhs);
+        }
+        throw new Exception_1.NodeEvaluatorError("Cannot perform operation " + operator + " on dates");
+    };
     MathNodeEvaluator.prototype.handles = function () {
         return Expression_1.MATH_TYPE;
     };
     MathNodeEvaluator.prototype.value = function (item) {
         if (item instanceof Node_1.default) {
             item = item.value;
+        }
+        if (moment_1.default.isDuration(item) || moment_1.default.isMoment(item)) {
+            return item;
         }
         if (!isNaN(item)) {
             return Number(item);

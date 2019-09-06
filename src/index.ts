@@ -1,7 +1,8 @@
-import { Evaluator } from './Evaluator';
+import {Evaluator} from './Evaluator'
 import EvaluatorFactory from './Evaluator/Factory'
 
-export default {
-	Evaluator,
-	EvaluatorFactory
+export default Evaluator
+export {
+  Evaluator,
+  EvaluatorFactory,
 }
