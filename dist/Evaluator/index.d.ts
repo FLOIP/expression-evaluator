@@ -1,4 +1,4 @@
-import { ParseFunction } from 'floip-parser/dist/Parser';
+import { ParseFunction } from 'floip-parser/';
 import { NodeEvaluator } from './NodeEvaluator';
 /**
  * The Evaluator evaluates flow expressions and context.

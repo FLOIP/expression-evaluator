@@ -1184,8 +1184,8 @@ find-up@^3.0.0:
     locate-path "^3.0.0"
 
 "floip-parser@https://bitbucket.org/voto/floip-expression-evaluator#semver:v1":
-  version "1.4.0"
-  resolved "https://bitbucket.org/voto/floip-expression-evaluator#5c7491b0586a8777e69192d5a5ed892944165db2"
+  version "1.5.0"
+  resolved "https://bitbucket.org/voto/floip-expression-evaluator#fa58752cf24a625d2d0aed3ed6a09a6050548392"
 
 for-in@^1.0.2:
   version "1.0.2"

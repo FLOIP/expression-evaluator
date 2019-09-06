@@ -1,5 +1,4 @@
-// @ts-ignore
-import { ParseFunction } from 'floip-parser/dist/Parser';
+import { ParseFunction } from 'floip-parser/';
 import Node from './Node';
 import { NodeEvaluator } from './NodeEvaluator';
 

@@ -1,5 +1,5 @@
 import { Evaluator } from ".";
-import {parse} from 'floip-parser/dist/Parser';
+import {parse} from 'floip-parser';
 import { NodeEvaluator } from "./NodeEvaluator";
 import MemberNodeEvaluator from "./NodeEvaluator/MemberNodeEvaluator";
 import LogicNodeEvaluator from "./NodeEvaluator/LogicNodeEvaluator";
