@@ -45,17 +45,26 @@ var MemberNodeEvaluator = /** @class */ (function () {
     MemberNodeEvaluator.prototype.get = function (context, key) {
         var keys = key.split('.');
         var currentContext = context;
-        for (var i = 0; i < keys.length; ++i) {
-            var currentKey = keys[i];
+        // traverse the context tree until we run out of keys
+        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+            var currentKey = keys_1[_i];
             if (currentKey in currentContext) {
                 currentContext = currentContext[currentKey];
             }
             else {
-                if ('__value__' in currentContext) {
-                    return currentContext['__value__'];
-                }
-                return JSON.stringify(currentContext);
+                // if our current key doesn't exist, we return the compound key
+                return key;
             }
+        }
+        // at this point, we have a value associated with our key
+        // if it is a nested context, return its default value or JSON
+        if (!Array.isArray(currentContext)
+            && typeof currentContext === 'object'
+            && currentContext !== null) {
+            if ('__value__' in currentContext) {
+                return currentContext['__value__'];
+            }
+            return JSON.stringify(currentContext);
         }
         return currentContext;
     };

@@ -158,15 +158,16 @@ const nestedContextProvider : Array<[Node, object, string]> = [
 				name: 'Kyle',
 				address: {
 					business: {
-						foo: 'bar'
+						foo: 'bar',
+						__value__: '42'
 					}
 				}
 			}
 		},
-		'{"foo":"bar"}'
+		'address.business.city'
 	],
 	[
-		makeNode('contact', 'address.business.city'),
+		makeNode('contact', 'address.business'),
 		{
 			contact: {
 				name: 'Kyle',
@@ -179,6 +180,20 @@ const nestedContextProvider : Array<[Node, object, string]> = [
 			}
 		},
 		'42'
+	],
+	[
+		makeNode('contact', 'address.business'),
+		{
+			contact: {
+				name: 'Kyle',
+				address: {
+					business: {
+						foo: 'bar',
+					}
+				}
+			}
+		},
+		'{"foo":"bar"}'
 	],
 ]
 

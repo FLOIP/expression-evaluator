@@ -52,16 +52,26 @@ export default class MemberNodeEvaluator implements NodeEvaluator {
 	private get(context: object, key: string) {
 		const keys = key.split('.');
 		let currentContext = context;
-		for (let i = 0; i < keys.length; ++i) {
-			const currentKey = keys[i];
+
+		// traverse the context tree until we run out of keys
+		for (const currentKey of keys) {
 			if (currentKey in currentContext) {
 				currentContext = currentContext[currentKey];
 			} else {
-				if ('__value__' in currentContext) {
-					return currentContext['__value__']
-				}
-				return JSON.stringify(currentContext);
+				// if our current key doesn't exist, we return the compound key
+				return key;
 			}
+		}
+
+		// at this point, we have a value associated with our key
+		// if it is a nested context, return its default value or JSON
+		if (!Array.isArray(currentContext)
+		&& typeof currentContext === 'object'
+		&& currentContext !== null) {
+			if ('__value__' in currentContext) {
+				return currentContext['__value__'];
+			}
+			return JSON.stringify(currentContext);
 		}
 		return currentContext;
 	}
