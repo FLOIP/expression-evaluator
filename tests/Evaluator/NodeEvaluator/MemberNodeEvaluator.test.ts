@@ -5,17 +5,16 @@ import Node from '../../../src/Evaluator/Node';
 
 const evaluator : NodeEvaluator = new MemberNodeEvaluator;
 
-const makeNode = (key : string, value : string|null) => {
+const makeNode = (key : string) => {
 	return new Node({
 		type: MEMBER_TYPE,
 		key,
-		value,
 	});
 }
 
 const keysAndValuesProvider : Array<[Node, object, string]> = [
 	[
-		makeNode('contact', 'name'),
+		makeNode('contact.name'),
 		{
 			contact: {
 				name: 'Kyle'
@@ -36,7 +35,7 @@ describe.each(keysAndValuesProvider)(
 
 const keysNoValueProvider : Array<[Node, object, string]> = [
 	[
-		makeNode('contact', null),
+		makeNode('contact'),
 		{
 			contact: {
 				name: 'Kyle',
@@ -58,7 +57,7 @@ describe.each(keysNoValueProvider)(
 
 const keysDefaultValueProvider : Array<[Node, object, string]> = [
 	[
-		makeNode('contact', null),
+		makeNode('contact'),
 		{
 			contact: {
 				name: 'Kyle',
@@ -81,12 +80,12 @@ describe.each(keysDefaultValueProvider)(
 
 const absentKeyProvider : Array<[Node, object, string]> = [
 	[
-		makeNode('contact', 'name'),
+		makeNode('contact.name'),
 		{}, // empty context
 		'contact.name',
 	],
 	[
-		makeNode('contact', 'foo.bar.baz'),
+		makeNode('contact.foo.bar.baz'),
 		{},
 		'contact.foo.bar.baz'
 	]
@@ -103,7 +102,7 @@ describe.each(absentKeyProvider)(
 
 const arrayReturnProvider : Array<[Node, object, Array<any>]> = [
 	[
-		makeNode('flow', 'multipleChoice.value'),
+		makeNode('flow.multipleChoice.value'),
 		{
 			flow: {
 				multipleChoice: {
@@ -126,7 +125,7 @@ describe.each(arrayReturnProvider)(
 
 const nestedContextProvider : Array<[Node, object, string]> = [
 	[
-		makeNode('contact', 'lang.default'),
+		makeNode('contact.lang.default'),
 		{
 			contact: {
 				lang: {
@@ -138,7 +137,7 @@ const nestedContextProvider : Array<[Node, object, string]> = [
 		'en'
 	],
 	[
-		makeNode('contact', 'address.business.city'),
+		makeNode('contact.address.business.city'),
 		{
 			contact: {
 				name: 'Kyle',
@@ -152,7 +151,7 @@ const nestedContextProvider : Array<[Node, object, string]> = [
 		'Winnipeg'
 	],
 	[
-		makeNode('contact', 'address.business.city'),
+		makeNode('contact.address.business.city'),
 		{
 			contact: {
 				name: 'Kyle',
@@ -164,10 +163,10 @@ const nestedContextProvider : Array<[Node, object, string]> = [
 				}
 			}
 		},
-		'address.business.city'
+		'contact.address.business.city'
 	],
 	[
-		makeNode('contact', 'address.business'),
+		makeNode('contact.address.business'),
 		{
 			contact: {
 				name: 'Kyle',
@@ -182,7 +181,7 @@ const nestedContextProvider : Array<[Node, object, string]> = [
 		'42'
 	],
 	[
-		makeNode('contact', 'address.business'),
+		makeNode('contact.address.business'),
 		{
 			contact: {
 				name: 'Kyle',

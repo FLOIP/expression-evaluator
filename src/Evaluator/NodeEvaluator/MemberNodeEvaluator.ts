@@ -20,37 +20,7 @@ export default class MemberNodeEvaluator implements NodeEvaluator {
 
 		this.typeGuard(data);
 
-		// the requested object does not exist in the context, so just
-		// return the key/value that was requested as they were entered in
-		// the expression (e.g. return 'contact.name')
-		if (!(data.key in context)) {
-			if (data.value) {
-				return `${data.key}.${data.value}`
-			}
-			return data.key;
-		}
-
-		const element = context[data.key];
-
-		if (typeof data.value === 'undefined' || data.value === null) {
-			// return the __value__ element of the context, or else the whole
-			// context serialized
-			if ('__value__' in element) {
-				return element.__value__
-			}
-			return JSON.stringify(element);
-		}
-		return this.get(element, data.value);
-	}
-
-	typeGuard(member: Member) {
-		if (!('key' in member)) {
-			throw new NodeShapeError('Member node is the wrong shape, should have "key"');
-		}
-	}
-
-	private get(context: object, key: string) {
-		const keys = key.split('.');
+		const keys = data.key.split('.');
 		let currentContext = context;
 
 		// traverse the context tree until we run out of keys
@@ -59,7 +29,7 @@ export default class MemberNodeEvaluator implements NodeEvaluator {
 				currentContext = currentContext[currentKey];
 			} else {
 				// if our current key doesn't exist, we return the compound key
-				return key;
+				return data.key;
 			}
 		}
 
@@ -74,5 +44,11 @@ export default class MemberNodeEvaluator implements NodeEvaluator {
 			return JSON.stringify(currentContext);
 		}
 		return currentContext;
+	}
+
+	typeGuard(member: Member) {
+		if (!('key' in member)) {
+			throw new NodeShapeError('Member node is the wrong shape, should have "key"');
+		}
 	}
 }

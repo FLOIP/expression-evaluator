@@ -1185,7 +1185,7 @@ find-up@^3.0.0:
 
 "floip-parser@https://bitbucket.org/voto/floip-expression-evaluator#VMO-1172":
   version "1.5.1"
-  resolved "https://bitbucket.org/voto/floip-expression-evaluator#e7772fb17514fe9cbbe83229d2bc05952febfe19"
+  resolved "https://bitbucket.org/voto/floip-expression-evaluator#fced2d3c6514f188c03c960d5e863f3fac8aa8e2"
 
 for-in@^1.0.2:
   version "1.0.2"
