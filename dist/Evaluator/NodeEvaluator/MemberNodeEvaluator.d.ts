@@ -11,4 +11,5 @@ export default class MemberNodeEvaluator implements NodeEvaluator {
      */
     evaluate(node: Node, context: object): any;
     typeGuard(member: Member): void;
+    private get;
 }

@@ -40,12 +40,29 @@ export default class MemberNodeEvaluator implements NodeEvaluator {
 			}
 			return JSON.stringify(element);
 		}
-		return element[data.value];
+		return this.get(element, data.value);
 	}
 
 	typeGuard(member: Member) {
 		if (!('key' in member)) {
 			throw new NodeShapeError('Member node is the wrong shape, should have "key"');
 		}
+	}
+
+	private get(context: object, key: string) {
+		const keys = key.split('.');
+		let currentContext = context;
+		for (let i = 0; i < keys.length; ++i) {
+			const currentKey = keys[i];
+			if (currentKey in currentContext) {
+				currentContext = currentContext[currentKey];
+			} else {
+				if ('__value__' in currentContext) {
+					return currentContext['__value__']
+				}
+				return JSON.stringify(currentContext);
+			}
+		}
+		return currentContext;
 	}
 }

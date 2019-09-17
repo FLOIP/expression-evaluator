@@ -35,12 +35,29 @@ var MemberNodeEvaluator = /** @class */ (function () {
             }
             return JSON.stringify(element);
         }
-        return element[data.value];
+        return this.get(element, data.value);
     };
     MemberNodeEvaluator.prototype.typeGuard = function (member) {
         if (!('key' in member)) {
             throw new Exception_1.NodeShapeError('Member node is the wrong shape, should have "key"');
         }
+    };
+    MemberNodeEvaluator.prototype.get = function (context, key) {
+        var keys = key.split('.');
+        var currentContext = context;
+        for (var i = 0; i < keys.length; ++i) {
+            var currentKey = keys[i];
+            if (currentKey in currentContext) {
+                currentContext = currentContext[currentKey];
+            }
+            else {
+                if ('__value__' in currentContext) {
+                    return currentContext['__value__'];
+                }
+                return JSON.stringify(currentContext);
+            }
+        }
+        return currentContext;
     };
     return MemberNodeEvaluator;
 }());
