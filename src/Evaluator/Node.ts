@@ -36,6 +36,9 @@ export default class Node {
 		if (this.value === null) {
 			return 'NULL';
 		}
-		return this.value;
+		if (Array.isArray(this.value)) {
+			return this.value.join(', ');
+		}
+		return String(this.value);
 	}
 }

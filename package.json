@@ -1,6 +1,6 @@
 {
   "name": "floip-expression-evaluator-ts",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -12,7 +12,7 @@
   "author": "Kyle Seifert",
   "license": "UNLICENSED",
   "dependencies": {
-    "floip-parser": "https://bitbucket.org/voto/floip-expression-evaluator#semver:v1",
+    "floip-parser": "https://bitbucket.org/voto/floip-expression-evaluator#semver:>=1.6",
     "moment": "^2.24.0"
   },
   "devDependencies": {
