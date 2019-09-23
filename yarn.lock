@@ -1183,9 +1183,9 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
-"floip-parser@https://bitbucket.org/voto/floip-expression-evaluator#VMO-1172":
-  version "1.5.1"
-  resolved "https://bitbucket.org/voto/floip-expression-evaluator#fced2d3c6514f188c03c960d5e863f3fac8aa8e2"
+"floip-parser@https://bitbucket.org/voto/floip-expression-evaluator#semver:>=1.6":
+  version "1.6.0"
+  resolved "https://bitbucket.org/voto/floip-expression-evaluator#6c436dbbf998f95225ae344c55792782ecc62496"
 
 for-in@^1.0.2:
   version "1.0.2"
