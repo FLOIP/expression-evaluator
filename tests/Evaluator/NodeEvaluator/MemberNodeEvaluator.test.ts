@@ -204,3 +204,39 @@ describe.each(nestedContextProvider)(
 		})
 	}
 )
+
+const numericKeyProvider : Array<[Node, object, string]> = [
+	[
+		makeNode('flow.1570165060485_42.value'),
+		{
+			'flow' : {
+				'1570165060485_42' : {
+					'value' : 'Some Value',
+					'__value__' : 'Some Default'
+				}
+			}
+		},
+		'Some Value'
+	],
+	[
+		makeNode('flow.1570165060485_42'),
+		{
+			'flow' : {
+				'1570165060485_42' : {
+					'value' : 'Some Value',
+					'__value__' : 'Some Default'
+				}
+			}
+		},
+		'Some Default'
+	],
+]
+
+describe.each(numericKeyProvider)(
+	'%#: node: %o context: %o => %s',
+	(node, context, expected) => {
+		it('evaluates numeric key access in context', () => {
+			expect(evaluator.evaluate(node, context)).toEqual(expected);
+		})
+	}
+)
