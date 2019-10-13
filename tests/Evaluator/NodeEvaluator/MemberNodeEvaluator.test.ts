@@ -240,3 +240,15 @@ describe.each(numericKeyProvider)(
 		})
 	}
 )
+
+it('should treat undefined properties as not existing', () => {
+	const node = makeNode('flow.block.value')
+	const ctx = {
+		flow: {
+			block: {
+				value: undefined
+			}
+		}
+	}
+	expect(evaluator.evaluate(node, ctx)).toEqual('flow.block.value')
+})

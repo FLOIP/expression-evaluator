@@ -43,6 +43,10 @@ export default class MemberNodeEvaluator implements NodeEvaluator {
 			}
 			return JSON.stringify(currentContext);
 		}
+		// if we hit an undefined value, just return the compound key
+		if (typeof currentContext === 'undefined') {
+			return data.key;
+		}
 		return currentContext;
 	}
 

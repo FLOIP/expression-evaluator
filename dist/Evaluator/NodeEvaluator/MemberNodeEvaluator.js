@@ -40,6 +40,10 @@ var MemberNodeEvaluator = /** @class */ (function () {
             }
             return JSON.stringify(currentContext);
         }
+        // if we hit an undefined value, just return the compound key
+        if (typeof currentContext === 'undefined') {
+            return data.key;
+        }
         return currentContext;
     };
     MemberNodeEvaluator.prototype.typeGuard = function (member) {
