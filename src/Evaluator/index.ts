@@ -1,4 +1,4 @@
-import { ParseFunction } from 'floip-parser/';
+import { ParseFunction } from '@floip/expression-parser';
 import Node from './Node';
 import { NodeEvaluator } from './NodeEvaluator';
 
