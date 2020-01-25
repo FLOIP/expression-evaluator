@@ -1,5 +1,5 @@
 {
-  "name": "floip-expression-evaluator-ts",
+  "name": "@floip/expression-evaluator",
   "version": "1.1.2",
   "description": "",
   "main": "./dist/index.js",
@@ -10,7 +10,7 @@
     "watch": "tsc --watch"
   },
   "author": "Kyle Seifert",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "dependencies": {
     "floip-parser": "https://bitbucket.org/voto/floip-expression-evaluator#semver:>=1.6",
     "moment": "^2.24.0"
@@ -25,5 +25,4 @@
     "tslint": "^5.18.0",
     "typescript": "^3.5.3"
   },
-  "private": true
 }
