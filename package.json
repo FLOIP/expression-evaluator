@@ -4,6 +4,7 @@
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "repository": "git@github.com:FLOIP/expression-evaluator.git",
   "scripts": {
     "build": "tsc --declaration",
     "test": "jest",
@@ -11,6 +12,7 @@
   },
   "author": "Kyle Seifert",
   "license": "MIT",
+  "publishConfig": {"registry": "https://npm.pkg.github.com/"},
   "dependencies": {
     "@floip/expression-parser": "github:FLOIP/expression-parser#semver:>=1.6",
     "moment": "^2.24.0"
