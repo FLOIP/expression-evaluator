@@ -421,3 +421,27 @@ describe.each(nullExpressionProvider)(
 		})
 	}
 )
+
+const bugScrubProvider : Array<[string, any, string]> = [
+	// a bug was disovered that caused an exception to be thrown
+	[	
+		`@flow.mcq.value
+		@flow.1570165060485_42.value
+		@flow.jskey_1570165060485_42.value
+		@flow.mcq`,
+		{flow: {mcq: {value: 'foobar', __value__: 'foobar'}}},
+		`foobar
+		flow.1570165060485_42.value
+		flow.jskey_1570165060485_42.value
+		foobar`
+	]
+]
+
+describe.each(bugScrubProvider)(
+	'bug scrub %#',
+	(expression, context, expected) => {
+		it(`does not regress a bug`, () => {
+			expect(evaluator.evaluate(expression, context)).toBe(expected);
+		})
+	}
+)
