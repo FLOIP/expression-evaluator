@@ -1,4 +1,3 @@
-import {Expression} from '../../Contract/Expression'
 import Node from '../Node';
 
 interface NodeValue {
@@ -11,16 +10,11 @@ interface NodeEvaluator {
 	handles(): string;
 }
 
-interface MethodNodeHandler {
-	handles(): Array<string>;
-}
-
 class NodeEvaluatorException extends Error {}
 
 export {
 	NodeValue,
 	NodeEvaluatorException,
 	NodeEvaluator,
-	MethodNodeHandler
 }
 

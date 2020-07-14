@@ -17,7 +17,7 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "dependencies": {
-    "@floip/expression-parser": "^1.6.1",
+    "@floip/expression-parser": "^1.9",
     "moment": "^2.24.0"
   },
   "devDependencies": {

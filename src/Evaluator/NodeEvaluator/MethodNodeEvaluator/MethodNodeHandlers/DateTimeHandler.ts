@@ -6,7 +6,7 @@ export default class DateTimeHandler extends AbstractNodeHandler {
 	public handles(): string[] {
 		return [
 			'date',
-			'date_value',
+			'datevalue',
 			'day',
 			'edate',
 			'hour',
@@ -15,7 +15,7 @@ export default class DateTimeHandler extends AbstractNodeHandler {
 			'now',
 			'second',
 			'time',
-			'time_value',
+			'timevalue',
 			'today',
 			'weekday',
 			'year',
@@ -26,7 +26,7 @@ export default class DateTimeHandler extends AbstractNodeHandler {
 		return moment(new Date(Number(year), Number(month) - 1, Number(day)));
 	}
 
-	public date_value(dateString : string|Node) : Moment {
+	public datevalue(dateString : string|Node) : Moment {
 		return moment(String(dateString));
 	}
 
@@ -63,7 +63,7 @@ export default class DateTimeHandler extends AbstractNodeHandler {
 		return moment.duration({hours: Number(hours), minutes: Number(minutes), seconds: Number(seconds)});
 	}
 
-	public timeValue(string : string|Node) : Duration {
+	public timevalue(string : string|Node) : Duration {
 		return moment.duration(String(string));
 	}
 
