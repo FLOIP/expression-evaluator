@@ -1,4 +1,4 @@
-import { NodeEvaluator, MethodNodeHandler } from "..";
+import { NodeEvaluator } from "..";
 import Node from "../../Node";
 export interface MethodNodeHandler {
     handles(): Array<string>;

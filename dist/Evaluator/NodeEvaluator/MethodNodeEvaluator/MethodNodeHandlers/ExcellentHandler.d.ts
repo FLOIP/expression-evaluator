@@ -1,4 +1,4 @@
-import { MethodNodeHandler } from "../..";
+import { MethodNodeHandler } from "../";
 export default class ExcellentHandler implements MethodNodeHandler {
     handles(): string[];
     first_word(string: string): string;

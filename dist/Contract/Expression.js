@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.IDENTIFIER = exports.CONCATENATE_TYPE = exports.NULL_TYPE = exports.ESCAPE_TYPE = exports.LOGIC_TYPE = exports.MATH_TYPE = exports.MEMBER_TYPE = exports.METHOD_TYPE = exports.ExpressionFactory = void 0;
 var ExpressionFactory = /** @class */ (function () {
     function ExpressionFactory() {
     }

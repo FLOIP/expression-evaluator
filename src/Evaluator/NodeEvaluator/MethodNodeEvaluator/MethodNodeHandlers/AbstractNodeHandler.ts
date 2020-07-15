@@ -1,4 +1,4 @@
-import { MethodNodeHandler } from "../..";
+import { MethodNodeHandler } from "../"
 import Node from "../../../Node";
 
 export default abstract class AbstractNodeHandler implements MethodNodeHandler {

@@ -1,4 +1,4 @@
-import { MethodNodeHandler } from "../..";
+import { MethodNodeHandler } from "../";
 export default abstract class AbstractNodeHandler implements MethodNodeHandler {
     abstract handles(): string[];
     protected value(item: any): any;

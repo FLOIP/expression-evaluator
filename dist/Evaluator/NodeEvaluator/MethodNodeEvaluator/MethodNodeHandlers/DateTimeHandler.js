@@ -26,7 +26,7 @@ var DateTimeHandler = /** @class */ (function (_super) {
     DateTimeHandler.prototype.handles = function () {
         return [
             'date',
-            'date_value',
+            'datevalue',
             'day',
             'edate',
             'hour',
@@ -35,7 +35,7 @@ var DateTimeHandler = /** @class */ (function (_super) {
             'now',
             'second',
             'time',
-            'time_value',
+            'timevalue',
             'today',
             'weekday',
             'year',
@@ -44,7 +44,7 @@ var DateTimeHandler = /** @class */ (function (_super) {
     DateTimeHandler.prototype.date = function (year, month, day) {
         return moment_1.default(new Date(Number(year), Number(month) - 1, Number(day)));
     };
-    DateTimeHandler.prototype.date_value = function (dateString) {
+    DateTimeHandler.prototype.datevalue = function (dateString) {
         return moment_1.default(String(dateString));
     };
     DateTimeHandler.prototype.day = function (datetime) {
@@ -72,7 +72,7 @@ var DateTimeHandler = /** @class */ (function (_super) {
     DateTimeHandler.prototype.time = function (hours, minutes, seconds) {
         return moment_1.default.duration({ hours: Number(hours), minutes: Number(minutes), seconds: Number(seconds) });
     };
-    DateTimeHandler.prototype.timeValue = function (string) {
+    DateTimeHandler.prototype.timevalue = function (string) {
         return moment_1.default.duration(String(string));
     };
     DateTimeHandler.prototype.today = function () {
