@@ -13,9 +13,6 @@
   },
   "author": "Kyle Seifert",
   "license": "MIT",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "dependencies": {
     "@floip/expression-parser": "^1.9",
     "moment": "^2.24.0"
