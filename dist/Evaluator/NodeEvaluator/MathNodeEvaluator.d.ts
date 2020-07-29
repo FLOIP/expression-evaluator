@@ -5,6 +5,7 @@ export default class MathNodeEvaluator implements NodeEvaluator {
     evaluate(node: Node, context: object): number | moment.Moment | undefined;
     private evaluateDateMath;
     handles(): string;
-    private value;
+    value(item: any): number | moment.Moment | moment.Duration;
+    parseDateTime(thing: any): false | moment.Moment | moment.Duration;
     private typeGuard;
 }

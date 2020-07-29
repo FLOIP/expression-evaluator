@@ -7,6 +7,7 @@ var Node_1 = __importDefault(require("../Node"));
 var Expression_1 = require("../../Contract/Expression");
 var Exception_1 = require("./Exception");
 var moment_1 = __importDefault(require("moment"));
+var DATE_INTERVAL_REGEX = /^([0-9]+)\s(\w+)$/i;
 var MathNodeEvaluator = /** @class */ (function () {
     function MathNodeEvaluator() {
     }
@@ -62,7 +63,25 @@ var MathNodeEvaluator = /** @class */ (function () {
         if (!isNaN(item)) {
             return Number(item);
         }
+        var date = this.parseDateTime(item);
+        if (date) {
+            return date;
+        }
         throw new Exception_1.NodeEvaluatorError("Can only perform math on numbers, got " + item);
+    };
+    MathNodeEvaluator.prototype.parseDateTime = function (thing) {
+        var res = DATE_INTERVAL_REGEX.exec(thing);
+        if (res === null) {
+            return false;
+        }
+        if (res.length == 3) {
+            return moment_1.default.duration(res[1], res[2]);
+        }
+        var m = moment_1.default(thing);
+        if (m.isValid()) {
+            return m;
+        }
+        return false;
     };
     MathNodeEvaluator.prototype.typeGuard = function (math) {
         for (var _i = 0, _a = ['rhs', 'lhs', 'operator']; _i < _a.length; _i++) {
