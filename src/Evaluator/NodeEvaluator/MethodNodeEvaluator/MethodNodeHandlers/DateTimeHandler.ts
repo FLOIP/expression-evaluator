@@ -19,6 +19,7 @@ export default class DateTimeHandler extends AbstractNodeHandler {
 			'today',
 			'weekday',
 			'year',
+			'between',
 		];
 	}
 
@@ -85,5 +86,9 @@ export default class DateTimeHandler extends AbstractNodeHandler {
 			return item;
 		}
 		return String(item);
+	}
+
+	public between(date: string|Node, start: string|Node, end: string|Node) {
+		return moment(this.value(date)).isBetween(moment(this.value(start)), moment(this.value(end)))
 	}
 }

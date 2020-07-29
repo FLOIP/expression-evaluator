@@ -18,4 +18,5 @@ export default class DateTimeHandler extends AbstractNodeHandler {
     weekday(date: string | Node): number;
     year(date: string | Node): number;
     protected value(item: any): string | Moment;
+    between(date: string | Node, start: string | Node, end: string | Node): boolean;
 }

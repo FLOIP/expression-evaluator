@@ -39,6 +39,7 @@ var DateTimeHandler = /** @class */ (function (_super) {
             'today',
             'weekday',
             'year',
+            'between',
         ];
     };
     DateTimeHandler.prototype.date = function (year, month, day) {
@@ -90,6 +91,9 @@ var DateTimeHandler = /** @class */ (function (_super) {
             return item;
         }
         return String(item);
+    };
+    DateTimeHandler.prototype.between = function (date, start, end) {
+        return moment_1.default(this.value(date)).isBetween(moment_1.default(this.value(start)), moment_1.default(this.value(end)));
     };
     return DateTimeHandler;
 }(AbstractNodeHandler_1.default));
