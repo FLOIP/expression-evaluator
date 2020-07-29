@@ -445,3 +445,35 @@ describe.each(bugScrubProvider)(
 		})
 	}
 )
+
+const stringDateMathProvider: Array<[string, object, string]> = [
+	[
+		'Tomorrow is @(DATEVALUE("2020-01-01") + "1 day")',
+		{},
+		'Tomorrow is Thu Jan 02 2020 00:00:00 GMT-0600'
+	],
+	[
+		'Tomorrow is @(DATEVALUE("2020-01-01") + "1 week")',
+		{},
+		'Tomorrow is Wed Jan 08 2020 00:00:00 GMT-0600'
+	],
+	[
+		'Tomorrow is @(DATEVALUE("2020-01-01") + "1 month")',
+		{},
+		'Tomorrow is Sat Feb 01 2020 00:00:00 GMT-0600'
+	],
+	[
+		'Tomorrow is @(DATEVALUE("2020-01-01") + "1 hour")',
+		{},
+		'Tomorrow is Wed Jan 01 2020 01:00:00 GMT-0600'
+	]
+]
+
+describe.each(stringDateMathProvider)(
+	'string math %#',
+	(expression, context, expected) => {
+		it('does string date math', () => {
+			expect(evaluator.evaluate(expression, context)).toBe(expected)
+		})
+	}
+)

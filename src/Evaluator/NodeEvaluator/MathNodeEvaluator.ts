@@ -2,7 +2,9 @@ import { NodeEvaluator } from ".";
 import Node from "../Node";
 import { Math as MathExpression, MATH_TYPE } from "../../Contract/Expression";
 import { NodeShapeError, NodeEvaluatorError } from "./Exception";
-import moment, { Moment, Duration } from 'moment';
+import moment, { Moment, Duration, DurationInputArg2 } from 'moment';
+
+const DATE_INTERVAL_REGEX = /^([0-9]+)\s(\w+)$/i
 
 export default class MathNodeEvaluator implements NodeEvaluator {
 	evaluate(node: Node, context: object) {
@@ -54,18 +56,42 @@ export default class MathNodeEvaluator implements NodeEvaluator {
 		return MATH_TYPE;
 	}
 
-	private value(item) {
+	value(item) {
 		if (item instanceof Node) {
 			item = item.value;
-		} 
+		}
 		if (moment.isDuration(item) || moment.isMoment(item)) {
 			return item;
 		}
 		if (!isNaN(item)) {
 			return Number(item);
 		}
+		const date = this.parseDateTime(item)
+		if (date) {
+			return date
+		}
 		throw new NodeEvaluatorError(`Can only perform math on numbers, got ${item}`)
 	}
+
+	parseDateTime(thing) {
+		const res = DATE_INTERVAL_REGEX.exec(thing)
+
+		if (res === null) {
+			return false
+		}
+
+		if (res.length == 3) {
+			return moment.duration(res[1], res[2] as DurationInputArg2)
+		}
+
+		const m = moment(thing)
+
+		if (m.isValid()) {
+			return m
+		}
+
+		return false
+	}	
 
 	private typeGuard(math : MathExpression) {
 		for (let key of ['rhs', 'lhs', 'operator']) {
