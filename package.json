@@ -4,7 +4,6 @@
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "repository": "git@github.com:FLOIP/expression-evaluator.git",
   "scripts": {
     "clean": "rm -f tsconfig.tsbuildinfo && rm -rf dist/",
     "build": "tsc --declaration",
