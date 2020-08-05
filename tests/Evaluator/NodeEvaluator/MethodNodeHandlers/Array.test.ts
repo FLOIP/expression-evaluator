@@ -46,3 +46,27 @@ describe.each(inProvider)(
 		})
 	}
 )
+
+const countProvider: Array <[string[], number]> = [
+	[
+		[],
+		0
+	],
+	[
+		[''],
+		1
+	],
+	[
+		['hello', 'foo', 'bar'],
+		3
+	]
+]
+
+describe.each(countProvider)(
+	'%#: count(%s) : %s',
+	(arr, expected) => {
+		test('count', () => {
+			expect(handler.count(arr)).toEqual(expected)
+		})
+	}
+)
