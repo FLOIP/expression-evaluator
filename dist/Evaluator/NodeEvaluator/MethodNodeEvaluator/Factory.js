@@ -9,6 +9,7 @@ var ExcellentHandler_1 = __importDefault(require("./MethodNodeHandlers/Excellent
 var LogicalHandler_1 = __importDefault(require("./MethodNodeHandlers/LogicalHandler"));
 var MathHandler_1 = __importDefault(require("./MethodNodeHandlers/MathHandler"));
 var TextHandler_1 = __importDefault(require("./MethodNodeHandlers/TextHandler"));
+var ArrayHandler_1 = __importDefault(require("./MethodNodeHandlers/ArrayHandler"));
 var MethodNodeEvaluatorFactory = /** @class */ (function () {
     function MethodNodeEvaluatorFactory() {
     }
@@ -28,6 +29,7 @@ var MethodNodeEvaluatorFactory = /** @class */ (function () {
             new LogicalHandler_1.default,
             new MathHandler_1.default,
             new TextHandler_1.default,
+            new ArrayHandler_1.default
         ];
     };
     return MethodNodeEvaluatorFactory;

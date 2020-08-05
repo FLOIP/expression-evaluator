@@ -4,6 +4,7 @@ import ExcellentHandler from "./MethodNodeHandlers/ExcellentHandler";
 import LogicalHandler from "./MethodNodeHandlers/LogicalHandler";
 import MathHandler from "./MethodNodeHandlers/MathHandler";
 import TextHandler from "./MethodNodeHandlers/TextHandler";
+import ArrayHandler from "./MethodNodeHandlers/ArrayHandler";
 
 export default class MethodNodeEvaluatorFactory {
 	public static create(methodNodeHandlers : Array<MethodNodeHandler> = []) : MethodNodeEvaluator {
@@ -24,6 +25,7 @@ export default class MethodNodeEvaluatorFactory {
 			new LogicalHandler,
 			new MathHandler,
 			new TextHandler,
+			new ArrayHandler
 		];
 	}
 }

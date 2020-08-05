@@ -16,3 +16,15 @@ it('evaluates an expression with context member access', () => {
 it('evaluates a default exit block', () => {
 	expect(evaluator.evaluate('@(TRUE)', {})).toEqual('TRUE');
 });
+
+it('evaluates empty member variable', () => {
+	expect(evaluator.evaluate('@(contact.name = NULL)', {
+		contact: {
+			name: ''
+		}
+	})).toEqual('TRUE');
+})
+
+it('handles the IN operator', () => {
+	expect(evaluator.evaluate("@(IN('42', ARRAY('1','2','42','5')))", {})).toEqual('TRUE')
+})
