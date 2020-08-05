@@ -197,10 +197,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@floip/expression-parser@^1.9":
-  version "1.9.2"
-  resolved "https://npm.pkg.github.com/download/@floip/expression-parser/1.9.2/aa35e9218506f92fdb7dc6ce4d487f2ca59a67be965a0ac97fdfa66867f8624b#50c0882673c7774fab8b0a35bab72a70e9a87d7a"
-  integrity sha512-XybUhvwqNWNm5PpgcIZmvHe+juvICH9LSwdY1Y7IocJo6vpFAex7CKpbpkGoQmxXZnm4dasbEuBBVJWCmfIkmg==
+"@floip/expression-parser@^1.10.0":
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/@floip/expression-parser/-/expression-parser-1.10.0.tgz#386cb9fbfb2afc951daae40e03845a87bacf3509"
+  integrity sha512-pLR8p2z6q87O9c1XkP4DYfuEX+cKMn14a4jYkZ/t4ky1k+MEvp69zj662xJTzCkbH3ABsrwaxx7fP1FWASlEZw==
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
