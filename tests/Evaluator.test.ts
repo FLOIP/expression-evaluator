@@ -28,3 +28,11 @@ it('evaluates empty member variable', () => {
 it('handles the IN operator', () => {
 	expect(evaluator.evaluate("@(IN('42', ARRAY('1','2','42','5')))", {})).toEqual('TRUE')
 })
+
+it('handles type coercion gracefully', () => {
+	expect(evaluator.evaluate("@(IN('42', ARRAY(flow.mcq)))", {
+		flow: {
+			mcq: 42
+		}
+	})).toEqual('TRUE')
+})

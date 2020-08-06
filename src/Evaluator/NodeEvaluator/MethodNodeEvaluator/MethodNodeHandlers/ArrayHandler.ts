@@ -22,6 +22,7 @@ export default class ArrayHandler extends AbstractNodeHandler {
 		if (!Array.isArray(search)) {
 			throw new NodeEvaluatorError(`Can only perform IN on an array, got ${typeof search}`)
 		}
-		return (search).includes(value)
+		// we use some instead of includes for loose comparison
+		return (search).some((item) => item == value)
 	}
 }
