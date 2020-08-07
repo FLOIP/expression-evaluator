@@ -46,7 +46,8 @@ var ArrayHandler = /** @class */ (function (_super) {
         if (!Array.isArray(search)) {
             throw new Exception_1.NodeEvaluatorError("Can only perform IN on an array, got " + typeof search);
         }
-        return (search).includes(value);
+        // we use some instead of includes for loose comparison
+        return (search).some(function (item) { return item == value; });
     };
     ArrayHandler.prototype.count = function (array) {
         var arr = array;
