@@ -16,9 +16,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var AbstractNodeHandler_1 = __importDefault(require("./AbstractNodeHandler"));
 var Node_1 = __importDefault(require("../../../Node"));
 var Exception_1 = require("../../Exception");
+var AbstractNodeHandler_1 = __importDefault(require("./AbstractNodeHandler"));
 var ArrayHandler = /** @class */ (function (_super) {
     __extends(ArrayHandler, _super);
     function ArrayHandler() {
@@ -27,7 +27,8 @@ var ArrayHandler = /** @class */ (function (_super) {
     ArrayHandler.prototype.handles = function () {
         return [
             'array',
-            'in'
+            'in',
+            'count'
         ];
     };
     ArrayHandler.prototype.array = function () {
@@ -47,6 +48,16 @@ var ArrayHandler = /** @class */ (function (_super) {
         }
         // we use some instead of includes for loose comparison
         return (search).some(function (item) { return item == value; });
+    };
+    ArrayHandler.prototype.count = function (array) {
+        var arr = array;
+        if (array instanceof Node_1.default) {
+            arr = array.value;
+        }
+        if (!Array.isArray(arr)) {
+            throw new Exception_1.NodeEvaluatorError("Can only perform COUNT on an array, got " + typeof arr);
+        }
+        return arr.length;
     };
     return ArrayHandler;
 }(AbstractNodeHandler_1.default));
