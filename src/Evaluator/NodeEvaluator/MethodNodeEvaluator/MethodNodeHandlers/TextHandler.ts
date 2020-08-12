@@ -9,6 +9,7 @@ export default class TextHandler extends AbstractNodeHandler {
 			'clean',
 			'code',
 			'concatenate',
+			'contains',
 			'fixed',
 			'left',
 			'len',
@@ -40,6 +41,10 @@ export default class TextHandler extends AbstractNodeHandler {
 	public concatenate(...args : [string|Node]) : string {
 		return args.filter(this.isScalar).map(String)
 		           .reduce((carry, s) => carry + String(s));
+	}
+
+	public contains(needle: string|Node, haystack: string|Node) : boolean {
+		return String(haystack).includes(String(needle));
 	}
 
 	public fixed(number : number|Node, decimals : number|Node = 0, commas : boolean|Node = false) : string {

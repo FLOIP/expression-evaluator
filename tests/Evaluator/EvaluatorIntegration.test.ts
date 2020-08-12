@@ -155,6 +155,16 @@ const textMethodProvider : Array<[string, Object, string]> = [
 		'Your name is Big Papa' 
 	],
 	[
+		'@(CONTAINS(contact.needle, contact.haystack))',
+		{
+			contact : {
+				needle : 'Raptors',
+				haystack : 'Toronto Raptors',
+			}
+		},
+		'TRUE' 
+	],
+	[
 		'You have @(FIXED(contact.balance, 2)) in your account', 
 		{
 			contact : {
