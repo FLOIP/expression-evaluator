@@ -1,6 +1,7 @@
 import { ParseFunction } from '@floip/expression-parser';
 import Node from './Node';
 import { NodeEvaluator } from './NodeEvaluator';
+import moment from 'moment';
 
 /**
  * The Evaluator evaluates flow expressions and context.
@@ -32,6 +33,14 @@ export class Evaluator {
      * @return The evaluated expression.
      */
 	public evaluate(expression: string, context: object) : string {
+		// iterate through the expression context and convert all date strings
+		// into moment date objects
+		if (context['date'] !== undefined) {
+			for(let [k, v] of Object.entries(context['date'])) {
+				context['date'][k] = moment(String(v));
+			}
+		}
+
 		// parse our AST and map anything that looks like a node to a node object
 		const ast: [any] = this.parse(expression)
 			.map(item => Node.isNode(item) ? new Node(item) : item);
