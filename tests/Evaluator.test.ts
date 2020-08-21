@@ -1,5 +1,6 @@
 import EvaluatorFactory from '../src/Evaluator/Factory';
 import { Evaluator } from '../src/Evaluator';
+import moment from 'moment';
 
 const evaluator : Evaluator = EvaluatorFactory.create();
 
@@ -64,8 +65,9 @@ it('VMO-2640: time arithmetic', () => {
 	}
 	const exp = `@(DATEVALUE(date.today) + "7 days")`
 	const exp2 = `@(MONTH(DATEVALUE(date.today) + "7 days") > MONTH(DATEVALUE(date.today)))`
+	const expExpected = moment('2020-01-31', 'YYYY-MM-DD').add(7, 'days').toString()
 
-	expect(evaluator.evaluate(exp, context)).toEqual('Fri Feb 07 2020 00:00:00 GMT-0600')
+	expect(evaluator.evaluate(exp, context)).toEqual(expExpected)
 	expect(evaluator.evaluate(exp2, context)).toEqual(TRUE)
 })
 

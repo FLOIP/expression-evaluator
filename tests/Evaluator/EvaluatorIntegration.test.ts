@@ -1,6 +1,6 @@
 import EvaluatorFactory from "../../src/Evaluator/Factory";
-import moment = require("moment");
 import mockdate from 'mockdate';
+import moment from "moment";
 
 const evaluator = EvaluatorFactory.create();
 
@@ -473,22 +473,22 @@ const stringDateMathProvider: Array<[string, object, string]> = [
 	[
 		'Tomorrow is @(DATEVALUE("2020-01-01") + "1 day")',
 		{},
-		'Tomorrow is Thu Jan 02 2020 00:00:00 GMT-0600'
+		`Tomorrow is ${moment('2020-01-01', 'YYYY-MM-DD').add(1, 'day').toString()}`
 	],
 	[
 		'Tomorrow is @(DATEVALUE("2020-01-01") + "1 week")',
 		{},
-		'Tomorrow is Wed Jan 08 2020 00:00:00 GMT-0600'
+		`Tomorrow is ${moment('2020-01-01', 'YYYY-MM-DD').add(1, 'week').toString()}`
 	],
 	[
 		'Tomorrow is @(DATEVALUE("2020-01-01") + "1 month")',
 		{},
-		'Tomorrow is Sat Feb 01 2020 00:00:00 GMT-0600'
+		`Tomorrow is ${moment('2020-01-01', 'YYYY-MM-DD').add(1, 'month').toString()}`
 	],
 	[
 		'Tomorrow is @(DATEVALUE("2020-01-01") + "1 hour")',
 		{},
-		'Tomorrow is Wed Jan 01 2020 01:00:00 GMT-0600'
+		`Tomorrow is ${moment('2020-01-01', 'YYYY-MM-DD').add(1, 'hour').toString()}`
 	]
 ]
 
