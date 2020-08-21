@@ -72,6 +72,19 @@ it('EvaluatesMethodWithMemberArg', () => {
 	expect(evaluator.evaluate(expression, context)).toBe(expected);
 })
 
+it('EvaluatesDateStringContext', () => {
+	const now = moment('2020-02-14');
+	const nowString = moment(now).toString();
+	const expression = "7 days from today is @(date.today + '7 days')";
+	const expected = `7 days from today is ${nowString}`;
+	const context = {
+		date: {
+			today: '2020-02-07'
+		}
+	};
+	expect(evaluator.evaluate(expression, context)).toBe(expected);
+})
+
 const testTemplate = '%#: %s : %s';
 const contextTest = '%#: %s [%o] : %s';
 
