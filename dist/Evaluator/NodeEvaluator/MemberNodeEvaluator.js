@@ -1,7 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Expression_1 = require("../../Contract/Expression");
 var Exception_1 = require("./Exception");
+var moment_1 = __importDefault(require("moment"));
 var MemberNodeEvaluator = /** @class */ (function () {
     function MemberNodeEvaluator() {
     }
@@ -31,12 +35,16 @@ var MemberNodeEvaluator = /** @class */ (function () {
             }
         }
         // at this point, we have a value associated with our key
-        // if it is a nested context, return its default value or JSON
+        // if it is a nested context, return its default value or JSON 
+        // unless it is a Moment object which we return
         if (!Array.isArray(currentContext)
             && typeof currentContext === 'object'
             && currentContext !== null) {
             if ('__value__' in currentContext) {
                 return currentContext['__value__'];
+            }
+            if (moment_1.default.isMoment(currentContext)) {
+                return currentContext;
             }
             return JSON.stringify(currentContext);
         }

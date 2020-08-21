@@ -3,6 +3,9 @@ import { Evaluator } from '../src/Evaluator';
 
 const evaluator : Evaluator = EvaluatorFactory.create();
 
+const TRUE = 'TRUE'
+const FALSE = 'FALSE'
+
 it('returns a string from an expression', () => {
 	expect(evaluator.evaluate('Hello World', {}))
 	.toEqual('Hello World');
@@ -14,7 +17,7 @@ it('evaluates an expression with context member access', () => {
 });
 
 it('evaluates a default exit block', () => {
-	expect(evaluator.evaluate('@(TRUE)', {})).toEqual('TRUE');
+	expect(evaluator.evaluate('@(TRUE)', {})).toEqual(TRUE);
 });
 
 it('evaluates empty member variable', () => {
@@ -22,11 +25,11 @@ it('evaluates empty member variable', () => {
 		contact: {
 			name: ''
 		}
-	})).toEqual('TRUE');
+	})).toEqual(TRUE);
 })
 
 it('handles the IN operator', () => {
-	expect(evaluator.evaluate("@(IN('42', ARRAY('1','2','42','5')))", {})).toEqual('TRUE')
+	expect(evaluator.evaluate("@(IN('42', ARRAY('1','2','42','5')))", {})).toEqual(TRUE)
 })
 
 it('handles type coercion gracefully', () => {
@@ -34,5 +37,48 @@ it('handles type coercion gracefully', () => {
 		flow: {
 			mcq: 42
 		}
-	})).toEqual('TRUE')
+	})).toEqual(TRUE)
+})
+
+const betweenProvider: Array<[string, string]> = [
+	['@(BETWEEN(DATE(2020, 08, 07), DATE(2020, 07, 01), DATE(2020, 09, 01)))', TRUE],
+	['@(BETWEEN(DATE(2020, 10, 07), DATE(2020, 07, 01), DATE(2020, 09, 01)))', FALSE],
+	["@(BETWEEN(DATEVALUE('2020-08-07'), DATEVALUE('2020-07-01'), DATEVALUE('2020-09-01')))", TRUE],
+	["@(BETWEEN(DATEVALUE('2020-10-07'), DATEVALUE('2020-07-01'), DATEVALUE('2020-09-01')))", FALSE]
+]
+
+describe.each(betweenProvider)(
+	'%#: BETWEEN(%s) : %s',
+	(expression, expected) => {
+		test('handles BETWEEN two dates', () => {
+			expect(evaluator.evaluate(expression, {})).toEqual(expected)
+		})
+	}
+)
+
+it('VMO-2640: time arithmetic', () => {
+	const context = {
+		date: {
+			today: '2020-01-31'
+		}
+	}
+	const exp = `@(DATEVALUE(date.today) + "7 days")`
+	const exp2 = `@(MONTH(DATEVALUE(date.today) + "7 days") > MONTH(DATEVALUE(date.today)))`
+
+	expect(evaluator.evaluate(exp, context)).toEqual('Fri Feb 07 2020 00:00:00 GMT-0600')
+	expect(evaluator.evaluate(exp2, context)).toEqual(TRUE)
+})
+
+it('bug scrub', () => {
+	const c = {
+		flow: {
+			temperature: {
+				__value__: "Above 39 : body is very hot "
+			}
+		}
+	}
+
+	const e = "@(AND(flow.temperature = \"Above 39 : body is very hot \"))"
+
+	expect(evaluator.evaluate(e, c)).toBeTruthy()
 })

@@ -29,6 +29,7 @@ var TextHandler = /** @class */ (function (_super) {
             'clean',
             'code',
             'concatenate',
+            'contains',
             'fixed',
             'left',
             'len',
@@ -60,6 +61,9 @@ var TextHandler = /** @class */ (function (_super) {
         }
         return args.filter(this.isScalar).map(String)
             .reduce(function (carry, s) { return carry + String(s); });
+    };
+    TextHandler.prototype.contains = function (needle, haystack) {
+        return String(haystack).includes(String(needle));
     };
     TextHandler.prototype.fixed = function (number, decimals, commas) {
         if (decimals === void 0) { decimals = 0; }

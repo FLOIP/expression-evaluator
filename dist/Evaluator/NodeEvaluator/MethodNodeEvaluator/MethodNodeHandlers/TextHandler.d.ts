@@ -6,6 +6,7 @@ export default class TextHandler extends AbstractNodeHandler {
     clean(string: string | Node): string;
     code(string: string | Node): number;
     concatenate(...args: [string | Node]): string;
+    contains(needle: string | Node, haystack: string | Node): boolean;
     fixed(number: number | Node, decimals?: number | Node, commas?: boolean | Node): string;
     left(string: string | Node, chars: number | Node): string;
     len(string: string | Node): number;

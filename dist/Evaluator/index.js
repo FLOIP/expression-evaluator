@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Evaluator = void 0;
 var Node_1 = __importDefault(require("./Node"));
+var moment_1 = __importDefault(require("moment"));
 /**
  * The Evaluator evaluates flow expressions and context.
  * Expressions may be composed of many different node types as well as plain
@@ -34,6 +35,14 @@ var Evaluator = /** @class */ (function () {
      * @return The evaluated expression.
      */
     Evaluator.prototype.evaluate = function (expression, context) {
+        // iterate through the expression context and convert all date strings
+        // into moment date objects
+        if (context['date'] !== undefined) {
+            for (var _i = 0, _a = Object.entries(context['date']); _i < _a.length; _i++) {
+                var _b = _a[_i], k = _b[0], v = _b[1];
+                context['date'][k] = moment_1.default(String(v));
+            }
+        }
         // parse our AST and map anything that looks like a node to a node object
         var ast = this.parse(expression)
             .map(function (item) { return Node_1.default.isNode(item) ? new Node_1.default(item) : item; });
@@ -44,8 +53,8 @@ var Evaluator = /** @class */ (function () {
         // now evaluate all of the nodes in our depth-first array
         // since the nodes are object references, the originals in the ast
         // array will get the values.
-        for (var _i = 0, orderedNodes_1 = orderedNodes; _i < orderedNodes_1.length; _i++) {
-            var node = orderedNodes_1[_i];
+        for (var _c = 0, orderedNodes_1 = orderedNodes; _c < orderedNodes_1.length; _c++) {
+            var node = orderedNodes_1[_c];
             node.value = this.getNodeEvaluator(node.type()).evaluate(node, context);
         }
         // all the nodes are evaluated, so we can join the parts of the
