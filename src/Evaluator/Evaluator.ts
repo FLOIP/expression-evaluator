@@ -32,9 +32,19 @@ export class Evaluator {
    * @return The evaluated expression.
    */
   public evaluate(expression: string, context: object | string): string {
+		// check types
+		if (typeof expression !== 'string') {
+			throw new EvaluatorError(`Expression must be a string, got ${typeof expression}`)
+		}
+
     if (typeof context === 'string') {
       context = this.deserializeContextOrThrow(context)
     }
+
+		if (typeof context !== 'object') {
+			throw new EvaluatorError(`Expression Context must be an object, got ${typeof context}`)
+		}
+
     // iterate through the expression context and convert all date strings into moment date objects
     if (context['date'] !== undefined) {
       for (const [k, v] of Object.entries(context['date'])) {
