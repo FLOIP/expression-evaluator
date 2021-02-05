@@ -44,12 +44,12 @@ const keysNoValueProvider: Array<[Node, object, string]> = [
 ]
 
 describe.each(keysNoValueProvider)(
-  '%#: node: %o context: %o => %s',
-  (node, context, expected) => {
-    it('evaluates member node with key and no value', () => {
-      expect(evaluator.evaluate(node, context)).toEqual(expected);
-    })
-  }
+	'%#: node: %o context: %o => %s',
+	(node, context, expected) => {
+		it('evaluates member node with key and no value', () => {
+			expect(JSON.stringify(evaluator.evaluate(node, context))).toEqual(JSON.stringify(expected));
+		})
+	}
 )
 
 const keysDefaultValueProvider: Array<[Node, object, string]> = [
@@ -194,12 +194,12 @@ const nestedContextProvider: Array<[Node, object, string]> = [
 ]
 
 describe.each(nestedContextProvider)(
-  '%#: node: %o context: %o => %s',
-  (node, context, expected) => {
-    it('evaluates nested context', () => {
-      expect(evaluator.evaluate(node, context)).toEqual(expected);
-    })
-  }
+	'%#: node: %o context: %o => %s',
+	(node, context, expected) => {
+		it('evaluates nested context', () => {
+			expect(JSON.stringify(evaluator.evaluate(node, context))).toEqual(JSON.stringify(expected));
+		})
+	}
 )
 
 const numericKeyProvider: Array<[Node, object, string]> = [

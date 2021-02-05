@@ -23,3 +23,4 @@ export * from './Evaluator/NodeEvaluator/MethodNodeEvaluator/MethodNodeHandlers/
 export * from './Evaluator/NodeEvaluator/MethodNodeEvaluator/MethodNodeHandlers/LogicalHandler'
 export * from './Evaluator/NodeEvaluator/MethodNodeEvaluator/MethodNodeHandlers/MathHandler'
 export * from './Evaluator/NodeEvaluator/MethodNodeEvaluator/MethodNodeHandlers/TextHandler'
+export * from './Evaluator/NodeEvaluator/MemberNodeEvaluator/MemberObject'
