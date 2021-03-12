@@ -2,6 +2,7 @@ import { ParseFunction } from '@floip/expression-parser';
 import Node from './Node';
 import { NodeEvaluator } from './NodeEvaluator';
 import moment from 'moment';
+import {EvaluatorError} from './Exception';
 
 /**
  * The Evaluator evaluates flow expressions and context.
@@ -28,11 +29,14 @@ export class Evaluator {
      * via addNodeEvaluator.
      *
      * @param expression Expression to evaluate
-     * @param context The expression context
+     * @param context The expression context, as an object or JSON 
      * @see Evaluator::addNodeEvaluator
      * @return The evaluated expression.
      */
-	public evaluate(expression: string, context: object) : string {
+	public evaluate(expression: string, context: object|string) : string {
+		if (typeof context === 'string') {
+			context = this.deserializeContextOrThrow(context)
+		}
 		// iterate through the expression context and convert all date strings
 		// into moment date objects
 		if (context['date'] !== undefined) {
@@ -60,6 +64,20 @@ export class Evaluator {
 		// all the nodes are evaluated, so we can join the parts of the
 		// expression together.
 		return ast.map(x => x.toString()).join('');
+	}
+
+	private deserializeContextOrThrow(context: string): object {
+		try {
+			const deserialized = JSON.parse(context)
+			if (typeof deserialized === 'object') {
+				return deserialized;
+			}
+		} catch (error) {
+			if (error instanceof SyntaxError) {
+				throw new EvaluatorError(`Syntax error when deserializing context: ${context}`)
+			}
+		}
+		throw new EvaluatorError(`Could not deserialize context into object: ${context}`) 
 	}
 
 	private sortNodesDepthFirst(nodes : Array<Node>) : Array<Node> {
