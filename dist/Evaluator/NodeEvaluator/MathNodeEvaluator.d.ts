@@ -1,11 +1,13 @@
-import { NodeEvaluator } from ".";
-import Node from "../Node";
+import {Node, NodeEvaluator} from "../..";
 import moment from 'moment';
-export default class MathNodeEvaluator implements NodeEvaluator {
-    evaluate(node: Node, context: object): number | moment.Moment | undefined;
+
+export declare const MATH_TYPE = "MATH";
+export declare class MathNodeEvaluator implements NodeEvaluator {
+    evaluate(node: Node, _context: object): any;
     private evaluateDateMath;
     handles(): string;
-    value(item: any): number | moment.Moment | moment.Duration;
-    parseDateTime(thing: any): false | moment.Moment | moment.Duration;
+    value(item: unknown): any;
+    parseDateTime(dateTimeString: string): moment.Moment | boolean | moment.Duration;
     private typeGuard;
 }
+//# sourceMappingURL=MathNodeEvaluator.d.ts.map

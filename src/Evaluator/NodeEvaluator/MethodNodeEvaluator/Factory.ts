@@ -1,12 +1,15 @@
-import {MethodNodeEvaluator, MethodNodeHandler} from "."
-import DateTimeHandler from "./MethodNodeHandlers/DateTimeHandler"
-import ExcellentHandler from "./MethodNodeHandlers/ExcellentHandler"
-import LogicalHandler from "./MethodNodeHandlers/LogicalHandler"
-import MathHandler from "./MethodNodeHandlers/MathHandler"
-import TextHandler from "./MethodNodeHandlers/TextHandler"
-import ArrayHandler from "./MethodNodeHandlers/ArrayHandler"
+import {
+  ArrayHandler,
+  DateTimeHandler,
+  ExcellentHandler,
+  LogicalHandler,
+  MathHandler,
+  MethodNodeEvaluator,
+  MethodNodeHandler,
+  TextHandler,
+} from "../../../index"
 
-export default class MethodNodeEvaluatorFactory {
+export class MethodNodeEvaluatorFactory {
   public static create(methodNodeHandlers: Array<MethodNodeHandler> = []): MethodNodeEvaluator {
     const evaluator = new MethodNodeEvaluator
 
@@ -20,12 +23,12 @@ export default class MethodNodeEvaluatorFactory {
 
   public static defaultHandlers(): Array<MethodNodeHandler> {
     return [
-      new DateTimeHandler,
-      new ExcellentHandler,
-      new LogicalHandler,
-      new MathHandler,
-      new TextHandler,
-      new ArrayHandler
+      new DateTimeHandler(),
+      new ExcellentHandler(),
+      new LogicalHandler(),
+      new MathHandler(),
+      new TextHandler(),
+      new ArrayHandler()
     ]
   }
 }

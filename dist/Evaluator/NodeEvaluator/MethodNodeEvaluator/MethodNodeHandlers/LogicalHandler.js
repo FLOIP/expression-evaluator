@@ -1,26 +1,10 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var Node_1 = __importDefault(require("../../../Node"));
-var Exception_1 = require("../../Exception");
-var AbstractNodeHandler_1 = __importDefault(require("./AbstractNodeHandler"));
+exports.LogicalHandler = void 0;
+var tslib_1 = require("tslib");
+var __1 = require("../../../..");
 var LogicalHandler = /** @class */ (function (_super) {
-    __extends(LogicalHandler, _super);
+    tslib_1.__extends(LogicalHandler, _super);
     function LogicalHandler() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -32,44 +16,67 @@ var LogicalHandler = /** @class */ (function (_super) {
         ];
     };
     LogicalHandler.prototype.and = function () {
+        var e_1, _a;
+        var _this = this;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        for (var _a = 0, _b = args.map(this.value).filter(this.isScalar); _a < _b.length; _a++) {
-            var arg = _b[_a];
-            if (arg == false) {
-                return false;
+        try {
+            for (var _b = tslib_1.__values(args.map(function (arg) { return _this.value(arg); }).filter(function (arg) { return _super.prototype.isScalar.call(_this, arg); })), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var arg = _c.value;
+                if (!arg) {
+                    return false;
+                }
             }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
         return true;
     };
     LogicalHandler.prototype.if = function () {
+        var _this = this;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        args = args.map(this.value).filter(this.isScalar);
+        args = args.map(function (arg) { return _this.value(arg); }).filter(function (arg) { return _super.prototype.isScalar.call(_this, arg); });
         if (args.length != 3) {
-            throw new Exception_1.NodeEvaluatorError();
+            throw new __1.NodeEvaluatorError();
         }
         return args[0] ? args[1] : args[2];
     };
     LogicalHandler.prototype.or = function () {
+        var e_2, _a;
+        var _this = this;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        for (var _a = 0, _b = args.map(this.value).filter(this.isScalar); _a < _b.length; _a++) {
-            var arg = _b[_a];
-            if (arg == true) {
-                return true;
+        try {
+            for (var _b = tslib_1.__values(args.map(function (arg) { return _this.value(arg); }).filter(function (arg) { return _super.prototype.isScalar.call(_this, arg); })), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var arg = _c.value;
+                if (arg) {
+                    return true;
+                }
             }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_2) throw e_2.error; }
         }
         return false;
     };
     LogicalHandler.prototype.value = function (item) {
-        if (item instanceof Node_1.default) {
+        if (item instanceof __1.Node) {
             var val = item.value;
             if (typeof val === 'string') {
                 switch (val.toUpperCase()) {
@@ -87,6 +94,6 @@ var LogicalHandler = /** @class */ (function (_super) {
         return item;
     };
     return LogicalHandler;
-}(AbstractNodeHandler_1.default));
-exports.default = LogicalHandler;
+}(__1.AbstractNodeHandler));
+exports.LogicalHandler = LogicalHandler;
 //# sourceMappingURL=LogicalHandler.js.map

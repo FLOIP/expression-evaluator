@@ -106,14 +106,14 @@ module.exports = {
 
     // These are off due to https://github.com/typescript-eslint/typescript-eslint/blob/f335c504bcf75623d2d671e2e784b047e5e186b9/docs/getting-started/linting/FAQ.md#eslint-plugin-import
     'import/named': 'off',
-    'import/namespace': 'off',
-    'import/default': 'off',
-    'import/export': 'off',
-    'import/no-named-as-default-member': 'off',
-    'import/no-named-as-default': 'off',
+    'import/namespace': 'warn',
+    'import/default': 'warn',
+    'import/export': 'warn',
+    'import/no-named-as-default-member': 'warn',
+    'import/no-named-as-default': 'warn',
     'import/no-cycle': 'off',
-    'import/no-unused-modules': 'off',
-    'import/no-deprecated': 'off',
+    'import/no-unused-modules': 'warn',
+    'import/no-deprecated': 'warn',
 
     'import/no-absolute-path': 'off',
     'no-useless-constructor': 'off',

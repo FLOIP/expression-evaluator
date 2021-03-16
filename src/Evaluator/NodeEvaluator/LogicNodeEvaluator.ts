@@ -1,10 +1,10 @@
-import {NodeEvaluator} from "."
-import {Logic, LOGIC_TYPE} from "../../Contract/Expression"
-import {NodeEvaluatorError, NodeShapeError} from "./Exception"
-import Node from "../Node"
+import {Logic, Node, NodeEvaluator, NodeEvaluatorError, NodeShapeError} from "../.."
 
-export default class LogicNodeEvaluator implements NodeEvaluator {
-  evaluate(node: import("../Node").default, context: object) {
+export const LOGIC_TYPE = 'LOGIC'
+
+export class LogicNodeEvaluator implements NodeEvaluator {
+
+  evaluate(node: Node, _context: object): boolean {
     const data: Logic = node.data as Logic
 
     this.typeGuard(data)
@@ -12,10 +12,10 @@ export default class LogicNodeEvaluator implements NodeEvaluator {
     let lhs = this.value(data.lhs)
     let rhs = this.value(data.rhs)
 
-    if (!isNaN(lhs)) {
+    if (!isNaN(Number(lhs))) {
       lhs = Number(lhs)
     }
-    if (!isNaN(rhs)) {
+    if (!isNaN(Number(rhs))) {
       rhs = Number(rhs)
     }
 
@@ -43,22 +43,25 @@ export default class LogicNodeEvaluator implements NodeEvaluator {
     return LOGIC_TYPE
   }
 
-  private value(item) {
+  private value(item): any {
     if (item instanceof Node) {
       item = item.value
     }
+
     if (typeof item === 'string') {
       if (item.toUpperCase() === 'TRUE') {
         return true
-      }
-      if (item.toUpperCase() === 'FALSE') {
+      } else if (item.toUpperCase() === 'FALSE') {
         return false
+      } else {
+        return item
       }
+    } else {
+      return item
     }
-    return item
   }
 
-  private typeGuard(logic: Logic) {
+  private typeGuard(logic: Logic): void {
     for (const key of ['rhs', 'lhs', 'operator']) {
       if (!(key in logic)) {
         throw new NodeShapeError('Logic node is the wrong shape, should have "rhs", "lhs", "operator"')

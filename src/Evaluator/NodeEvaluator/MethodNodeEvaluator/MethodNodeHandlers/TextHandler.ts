@@ -1,8 +1,6 @@
-import AbstractNodeHandler from "./AbstractNodeHandler"
-import {NodeEvaluatorException} from "../.."
-import Node from "../../../Node"
+import {AbstractNodeHandler, Node, NodeEvaluatorException} from "../../../.."
 
-export default class TextHandler extends AbstractNodeHandler {
+export class TextHandler extends AbstractNodeHandler {
   public handles(): string[] {
     return [
       'char',
@@ -39,7 +37,7 @@ export default class TextHandler extends AbstractNodeHandler {
   }
 
   public concatenate(...args: [string | Node]): string {
-    return args.filter(this.isScalar).map(String)
+    return args.filter(arg => super.isScalar(arg)).map(String)
       .reduce((carry, s) => carry + String(s))
   }
 
@@ -48,36 +46,41 @@ export default class TextHandler extends AbstractNodeHandler {
   }
 
   public fixed(number: number | Node, decimals: number | Node = 0, commas: boolean | Node = false): string {
-    if (typeof commas === 'object') { // if context is 3rd param
+    // if context is 3rd param
+    if (typeof commas === 'object') {
       commas = false
     }
-    const n = number.toString()
-      .match(new RegExp("^-?\\d+(?:\\.\\d{0," + decimals + "})?", "g"))
 
-    if (n !== null && n.length) {
+    const n = new RegExp("^-?\\d+(?:\\.\\d{0," + decimals + "})?", "g").exec(number.toString())
+    if (n != null && n.length) {
       if (commas) {
         return Number(n[0]).toLocaleString()
+      } else {
+        return n[0]
       }
-      return n[0]
+    } else {
+      throw new NodeEvaluatorException(`Cannot format number ${number}`)
     }
-    throw new NodeEvaluatorException(`Cannot format number ${number}`)
   }
 
-  public left(string: string | Node, chars: number | Node) {
+  public left(string: string | Node, chars: number | Node): string {
     return String(string).substr(0, Number(chars))
   }
 
-  public len(string: string | Node) {
+  public len(string: string | Node): number {
     return String(string).length
   }
 
-  public lower(string: string | Node) {
+  public lower(string: string | Node): string {
     return String(string).toLowerCase()
   }
 
-  public proper(string: string | Node) {
+  public proper(string: string | Node): string {
     string = String(string).toLowerCase()
-    const reg = /\b\w/mg // match words
+
+    // match words
+    const reg = /\b\w/mg
+
     let match
     while ((match = reg.exec(string)) !== null) {
       const i = (match as RegExpExecArray).index
@@ -91,22 +94,22 @@ export default class TextHandler extends AbstractNodeHandler {
     return string
   }
 
-  public rept(string: string | Node, times: number | Node) {
+  public rept(string: string | Node, times: number | Node): string {
     return String(string).repeat(Number(times))
   }
 
-  public right(string: string | Node, chars: number | Node) {
+  public right(string: string | Node, chars: number | Node): string {
     return String(string).substr(-(Number(chars)))
   }
 
-  public substitute(string: string | Node, old: string | Node, replace: string | Node, instances: number | null = null) {
+  public substitute(string: string | Node, old: string | Node, replace: string | Node, instances: number | null = null): string | Node {
     if (typeof instances === 'object') {
       instances = null
     }
     string = String(string)
     old = String(old)
     replace = String(replace)
-    if (instances) {
+    if (instances != null) {
       for (let i = 0; i < Number(instances); ++i) {
         string = string.replace(old, replace)
       }
@@ -115,16 +118,15 @@ export default class TextHandler extends AbstractNodeHandler {
     return string.replace(new RegExp(old, 'mg'), replace)
   }
 
-  public unichar(unicode: number | Node) {
+  public unichar(unicode: number | Node): string {
     return String.fromCodePoint(Number(unicode))
   }
 
-  public unicode(string: string | Node) {
+  public unicode(string: string | Node): number | undefined {
     return String(string).codePointAt(0)
   }
 
-  public upper(string: string | Node) {
+  public upper(string: string | Node): string {
     return String(string).toUpperCase()
   }
-
 }

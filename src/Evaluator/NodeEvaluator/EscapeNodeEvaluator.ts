@@ -1,8 +1,11 @@
-import {NodeEvaluator} from "."
-import {ESCAPE_TYPE, IDENTIFIER} from "../../Contract/Expression"
+import {Node, NodeEvaluator} from "../.."
 
-export default class EscapeNodeEvaluator implements NodeEvaluator {
-  evaluate(node: import("../Node").default, context: object) {
+export const IDENTIFIER = '@'
+
+export const ESCAPE_TYPE = 'ESCAPE'
+
+export class EscapeNodeEvaluator implements NodeEvaluator {
+  evaluate(_node: Node, _context: object): string {
     return IDENTIFIER
   }
 

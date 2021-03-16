@@ -1,7 +1,7 @@
-import { NodeEvaluator } from ".";
-import Node from '../Node';
-import { Member } from "../../Contract/Expression";
-export default class MemberNodeEvaluator implements NodeEvaluator {
+import {Member, Node, NodeEvaluator} from '../..';
+
+export declare const MEMBER_TYPE = "MEMBER";
+export declare class MemberNodeEvaluator implements NodeEvaluator {
     handles(): string;
     /**
      * Evaluate the value of a member access node given a context.
@@ -12,3 +12,4 @@ export default class MemberNodeEvaluator implements NodeEvaluator {
     evaluate(node: Node, context: object): any;
     typeGuard(member: Member): void;
 }
+//# sourceMappingURL=MemberNodeEvaluator.d.ts.map

@@ -1,13 +1,13 @@
-import {NodeEvaluator} from "."
-import {NULL_TYPE} from "../../Contract/Expression"
-import Node from "../Node"
+import {Node, NodeEvaluator} from "../.."
 
-export default class NullNodeEvaluator implements NodeEvaluator {
+export const NULL_TYPE = 'NULL'
+
+export class NullNodeEvaluator implements NodeEvaluator {
   handles(): string {
     return NULL_TYPE
   }
 
-  evaluate(node: Node, context: object) {
+  evaluate(_node: Node, _context: object): null {
     return null
   }
 }

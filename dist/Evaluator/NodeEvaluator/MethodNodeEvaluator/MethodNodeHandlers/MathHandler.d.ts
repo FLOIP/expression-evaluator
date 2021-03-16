@@ -1,6 +1,6 @@
-import AbstractNodeHandler from "./AbstractNodeHandler";
-import Node from "../../../Node";
-export default class MathHandler extends AbstractNodeHandler {
+import {AbstractNodeHandler, Node} from "../../../..";
+
+export declare class MathHandler extends AbstractNodeHandler {
     handles(): string[];
     abs(number: number | Node): number;
     max(...args: [number | Node]): number;
@@ -9,3 +9,4 @@ export default class MathHandler extends AbstractNodeHandler {
     sum(...args: [number | Node]): number;
     protected value(item: any): number;
 }
+//# sourceMappingURL=MathHandler.d.ts.map

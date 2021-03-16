@@ -1,8 +1,7 @@
-import AbstractNodeHandler from "./AbstractNodeHandler"
-import Node from "../../../Node"
+import {AbstractNodeHandler, Node} from "../../../.."
 import moment, {Duration, Moment} from 'moment'
 
-export default class DateTimeHandler extends AbstractNodeHandler {
+export class DateTimeHandler extends AbstractNodeHandler {
   public handles(): string[] {
     return [
       'date',
@@ -73,7 +72,7 @@ export default class DateTimeHandler extends AbstractNodeHandler {
   }
 
   public weekday(date: string | Node): number {
-    return moment(String(date)).weekday()
+    return moment(String(date)).isoWeekday()
   }
 
   public year(date: string | Node): number {
@@ -81,14 +80,15 @@ export default class DateTimeHandler extends AbstractNodeHandler {
   }
 
   protected value(item: any): string | Moment {
-    const v = super.value(item)
+    // TODO: result of super.value is unused, is this an error, or is this an unnecessary call?
+    super.value(item)
     if (moment.isMoment(item)) {
       return item
     }
     return String(item)
   }
 
-  public between(date: string | Node, start: string | Node, end: string | Node) {
+  public between(date: string | Node, start: string | Node, end: string | Node): boolean {
     return moment(this.value(date)).isBetween(moment(this.value(start)), moment(this.value(end)))
   }
 }

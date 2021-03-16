@@ -1,9 +1,6 @@
-import {MethodNodeHandler} from "../"
-import Node from "../../../Node"
+import {MethodNodeHandler, Node} from "../../../.."
 
-const PUNCTUATION = ',:;!?.-'
-
-export default class ExcellentHandler implements MethodNodeHandler {
+export class ExcellentHandler implements MethodNodeHandler {
   public handles(): string[] {
     return [
       'first_word',
@@ -27,16 +24,15 @@ export default class ExcellentHandler implements MethodNodeHandler {
   }
 
   public percent(number: number | string): string {
-    return Number(number) * 100 + "%"
+    return `${Number(number) * 100}%`
   }
 
-  public read_digits(string) {
+  public read_digits(_value: string): void {
     throw new Error('Not implemented')
   }
 
   public remove_fist_word(string: string): string {
-    const word = this.first_word(string)
-    return string.substr(word.length)
+    return string.substr(this.first_word(string).length)
   }
 
   public word(string: string, number: number, bySpaces?: boolean): string {
@@ -44,22 +40,23 @@ export default class ExcellentHandler implements MethodNodeHandler {
 
     if (number < 0) {
       return split.reverse()[Math.abs(++number)]
+    } else {
+      return split[--number]
     }
-    return split[--number]
   }
 
   private splitByPunc(string: string): Array<string> {
     return string.split(/\s*[,:;!?.-]\s*|\s/g).filter(a => a)
   }
 
-  public word_count(string: string, bySpaces?: boolean) {
+  public word_count(string: string, bySpaces?: boolean): number {
     if (bySpaces) {
       return string.split(' ').length
     }
     return this.splitByPunc(string).length
   }
 
-  public word_slice(string: string, start: number, stop?: number, bySpaces?: boolean) {
+  public word_slice(string: string, start: number, stop?: number, bySpaces?: boolean): string {
     let split = bySpaces ? string.split(' ') : this.splitByPunc(string)
 
     if (typeof stop === 'undefined') {
@@ -96,11 +93,11 @@ export default class ExcellentHandler implements MethodNodeHandler {
     }
     if (typeof value === 'number') {
       return true
-    }
-    if (typeof value === 'string') {
+    } else if (typeof value === 'string') {
       return !isNaN(Number(value))
+    } else {
+      return false
     }
-    return false
   }
 
   public is_string(value: any): boolean {
@@ -109,7 +106,6 @@ export default class ExcellentHandler implements MethodNodeHandler {
     }
     return typeof value === 'string'
       && (isNaN(Number(value)) || value.trim().length === 0)
-
   }
 
   public is_bool(value: any): boolean {
@@ -123,12 +119,13 @@ export default class ExcellentHandler implements MethodNodeHandler {
         case 'FALSE' :
           return true
       }
+      // TODO: If we got here, this is probably a bug, so maybe we should throw an exception?
+      return false
+    } else if (typeof value === 'boolean') {
+      return true
+    } else {
       return false
     }
-    if (typeof value === 'boolean') {
-      return true
-    }
-    return false
   }
 
   public isnumber(value: any): boolean {

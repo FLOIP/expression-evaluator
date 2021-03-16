@@ -1,10 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var Node_1 = __importDefault(require("../../../Node"));
-var PUNCTUATION = ',:;!?.-';
+exports.ExcellentHandler = void 0;
+var __1 = require("../../../..");
 var ExcellentHandler = /** @class */ (function () {
     function ExcellentHandler() {
     }
@@ -31,19 +28,20 @@ var ExcellentHandler = /** @class */ (function () {
     ExcellentHandler.prototype.percent = function (number) {
         return Number(number) * 100 + "%";
     };
-    ExcellentHandler.prototype.read_digits = function (string) {
+    ExcellentHandler.prototype.read_digits = function (_value) {
         throw new Error('Not implemented');
     };
     ExcellentHandler.prototype.remove_fist_word = function (string) {
-        var word = this.first_word(string);
-        return string.substr(word.length);
+        return string.substr(this.first_word(string).length);
     };
     ExcellentHandler.prototype.word = function (string, number, bySpaces) {
         var split = bySpaces ? string.split(' ') : this.splitByPunc(string);
         if (number < 0) {
             return split.reverse()[Math.abs(++number)];
         }
-        return split[--number];
+        else {
+            return split[--number];
+        }
     };
     ExcellentHandler.prototype.splitByPunc = function (string) {
         return string.split(/\s*[,:;!?.-]\s*|\s/g).filter(function (a) { return a; });
@@ -83,26 +81,28 @@ var ExcellentHandler = /** @class */ (function () {
         return split.slice(start, stop).join(' ');
     };
     ExcellentHandler.prototype.is_number = function (value) {
-        if (value instanceof Node_1.default) {
+        if (value instanceof __1.Node) {
             value = value.value;
         }
         if (typeof value === 'number') {
             return true;
         }
-        if (typeof value === 'string') {
+        else if (typeof value === 'string') {
             return !isNaN(Number(value));
         }
-        return false;
+        else {
+            return false;
+        }
     };
     ExcellentHandler.prototype.is_string = function (value) {
-        if (value instanceof Node_1.default) {
+        if (value instanceof __1.Node) {
             value = value.value;
         }
         return typeof value === 'string'
             && (isNaN(Number(value)) || value.trim().length === 0);
     };
     ExcellentHandler.prototype.is_bool = function (value) {
-        if (value instanceof Node_1.default) {
+        if (value instanceof __1.Node) {
             value = value.value;
         }
         if (typeof value === 'string') {
@@ -112,12 +112,15 @@ var ExcellentHandler = /** @class */ (function () {
                 case 'FALSE':
                     return true;
             }
+            // TODO: If we got here, this is probably a bug, so maybe we should throw an exception?
             return false;
         }
-        if (typeof value === 'boolean') {
+        else if (typeof value === 'boolean') {
             return true;
         }
-        return false;
+        else {
+            return false;
+        }
     };
     ExcellentHandler.prototype.isnumber = function (value) {
         return this.is_number(value);
@@ -130,5 +133,5 @@ var ExcellentHandler = /** @class */ (function () {
     };
     return ExcellentHandler;
 }());
-exports.default = ExcellentHandler;
+exports.ExcellentHandler = ExcellentHandler;
 //# sourceMappingURL=ExcellentHandler.js.map

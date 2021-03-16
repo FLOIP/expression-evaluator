@@ -1,6 +1,6 @@
-import {Expression} from "../Contract/Expression"
+import {Expression} from "../"
 
-export default class Node {
+export class Node {
   public data: Expression;
   public value: any;
 
@@ -15,7 +15,7 @@ export default class Node {
   public static isNode(item: any): boolean {
     return typeof item === 'object'
       && item !== null
-      && item.hasOwnProperty('type')
+      && 'type' in item
   }
 
   /**
@@ -29,16 +29,14 @@ export default class Node {
   public toString(): string {
     if (typeof this.value === 'undefined') {
       throw new Error('Expression node value not set')
-    }
-    if (typeof this.value === 'boolean') {
+    } else if (typeof this.value === 'boolean') {
       return this.value ? 'TRUE' : 'FALSE'
-    }
-    if (this.value === null) {
+    } else if (this.value === null) {
       return 'NULL'
-    }
-    if (Array.isArray(this.value)) {
+    } else if (Array.isArray(this.value)) {
       return this.value.join(', ')
+    } else {
+      return String(this.value)
     }
-    return String(this.value)
   }
 }

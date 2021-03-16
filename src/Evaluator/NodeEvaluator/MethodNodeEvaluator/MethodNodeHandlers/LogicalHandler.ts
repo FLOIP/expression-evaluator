@@ -1,8 +1,6 @@
-import Node from "../../../Node"
-import {NodeEvaluatorError} from "../../Exception"
-import AbstractNodeHandler from "./AbstractNodeHandler"
+import {AbstractNodeHandler, Node, NodeEvaluatorError} from "../../../.."
 
-export default class LogicalHandler extends AbstractNodeHandler {
+export class LogicalHandler extends AbstractNodeHandler {
   public handles(): string[] {
     return [
       'and',
@@ -12,8 +10,8 @@ export default class LogicalHandler extends AbstractNodeHandler {
   }
 
   public and(...args: any[]): boolean {
-    for (const arg of args.map(this.value).filter(this.isScalar)) {
-      if (arg == false) {
+    for (const arg of args.map(arg => this.value(arg)).filter(arg => super.isScalar(arg))) {
+      if (!arg) {
         return false
       }
     }
@@ -21,7 +19,7 @@ export default class LogicalHandler extends AbstractNodeHandler {
   }
 
   public if(...args: any[]): any {
-    args = args.map(this.value).filter(this.isScalar)
+    args = args.map(arg => this.value(arg)).filter(arg => super.isScalar(arg))
     if (args.length != 3) {
       throw new NodeEvaluatorError()
     }
@@ -29,8 +27,8 @@ export default class LogicalHandler extends AbstractNodeHandler {
   }
 
   public or(...args: any[]): boolean {
-    for (const arg of args.map(this.value).filter(this.isScalar)) {
-      if (arg == true) {
+    for (const arg of args.map(arg => this.value(arg)).filter(arg => super.isScalar(arg))) {
+      if (arg) {
         return true
       }
     }
