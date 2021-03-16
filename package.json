@@ -1,6 +1,6 @@
 {
   "name": "@floip/expression-evaluator",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -9,7 +9,7 @@
     "build": "tsc --declaration",
     "test": "jest",
     "watch": "tsc --watch",
-    "prepare": "npm run test && npm run clean && npm run build"
+    "prepublish": "npm run test && npm run clean && npm run build"
   },
   "author": "Kyle Seifert",
   "license": "MIT",
