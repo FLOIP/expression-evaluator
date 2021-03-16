@@ -1,1 +1,0 @@
-{"version":3,"file":"NullNodeEvaluator.d.ts","sourceRoot":"","sources":["../../../src/Evaluator/NodeEvaluator/NullNodeEvaluator.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,aAAa,EAAE,IAAI,EAAC,MAAM,OAAO,CAAA;AAEzC,eAAO,MAAM,SAAS,SAAS,CAAA;AAE/B,qBAAa,iBAAkB,YAAW,aAAa;IACrD,OAAO,IAAI,MAAM;IAIjB,QAAQ,CAAC,KAAK,EAAE,IAAI,EAAE,QAAQ,EAAE,MAAM,GAAG,IAAI;CAG9C"}
