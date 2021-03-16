@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Node = void 0;
 var Node = /** @class */ (function () {
     function Node(data) {
         this.data = data;
@@ -11,7 +12,7 @@ var Node = /** @class */ (function () {
     Node.isNode = function (item) {
         return typeof item === 'object'
             && item !== null
-            && item.hasOwnProperty('type');
+            && 'type' in item;
     };
     /**
      * Return the type of this node.
@@ -24,18 +25,20 @@ var Node = /** @class */ (function () {
         if (typeof this.value === 'undefined') {
             throw new Error('Expression node value not set');
         }
-        if (typeof this.value === 'boolean') {
+        else if (typeof this.value === 'boolean') {
             return this.value ? 'TRUE' : 'FALSE';
         }
-        if (this.value === null) {
+        else if (this.value === null) {
             return 'NULL';
         }
-        if (Array.isArray(this.value)) {
+        else if (Array.isArray(this.value)) {
             return this.value.join(', ');
         }
-        return String(this.value);
+        else {
+            return String(this.value);
+        }
     };
     return Node;
 }());
-exports.default = Node;
+exports.Node = Node;
 //# sourceMappingURL=Node.js.map

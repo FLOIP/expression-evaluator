@@ -1,9 +1,10 @@
-import { MethodNodeHandler } from "../";
-export default class ExcellentHandler implements MethodNodeHandler {
+import {MethodNodeHandler} from "../../../..";
+
+export declare class ExcellentHandler implements MethodNodeHandler {
     handles(): string[];
     first_word(string: string): string;
     percent(number: number | string): string;
-    read_digits(string: any): void;
+    read_digits(_value: string): void;
     remove_fist_word(string: string): string;
     word(string: string, number: number, bySpaces?: boolean): string;
     private splitByPunc;
@@ -16,3 +17,4 @@ export default class ExcellentHandler implements MethodNodeHandler {
     isbool(value: any): boolean;
     isstring(value: any): boolean;
 }
+//# sourceMappingURL=ExcellentHandler.d.ts.map

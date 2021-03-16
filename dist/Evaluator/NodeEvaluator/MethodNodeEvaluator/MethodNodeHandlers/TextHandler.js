@@ -1,25 +1,10 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var AbstractNodeHandler_1 = __importDefault(require("./AbstractNodeHandler"));
-var __1 = require("../..");
+exports.TextHandler = void 0;
+var tslib_1 = require("tslib");
+var __1 = require("../../../..");
 var TextHandler = /** @class */ (function (_super) {
-    __extends(TextHandler, _super);
+    tslib_1.__extends(TextHandler, _super);
     function TextHandler() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -55,11 +40,12 @@ var TextHandler = /** @class */ (function (_super) {
             .charCodeAt(0);
     };
     TextHandler.prototype.concatenate = function () {
+        var _this = this;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        return args.filter(this.isScalar).map(String)
+        return args.filter(function (arg) { return _super.prototype.isScalar.call(_this, arg); }).map(String)
             .reduce(function (carry, s) { return carry + String(s); });
     };
     TextHandler.prototype.contains = function (needle, haystack) {
@@ -68,18 +54,22 @@ var TextHandler = /** @class */ (function (_super) {
     TextHandler.prototype.fixed = function (number, decimals, commas) {
         if (decimals === void 0) { decimals = 0; }
         if (commas === void 0) { commas = false; }
-        if (typeof commas === 'object') { // if context is 3rd param
+        // if context is 3rd param
+        if (typeof commas === 'object') {
             commas = false;
         }
-        var n = number.toString()
-            .match(new RegExp("^-?\\d+(?:\\.\\d{0," + decimals + "})?", "g"));
-        if (n !== null && n.length) {
+        var n = new RegExp("^-?\\d+(?:\\.\\d{0," + decimals + "})?", "g").exec(number.toString());
+        if (n != null && n.length) {
             if (commas) {
                 return Number(n[0]).toLocaleString();
             }
-            return n[0];
+            else {
+                return n[0];
+            }
         }
-        throw new __1.NodeEvaluatorException("Cannot format number " + number);
+        else {
+            throw new __1.NodeEvaluatorException("Cannot format number " + number);
+        }
     };
     TextHandler.prototype.left = function (string, chars) {
         return String(string).substr(0, Number(chars));
@@ -92,7 +82,8 @@ var TextHandler = /** @class */ (function (_super) {
     };
     TextHandler.prototype.proper = function (string) {
         string = String(string).toLowerCase();
-        var reg = /\b\w/mg; // match words
+        // match words
+        var reg = /\b\w/mg;
         var match;
         while ((match = reg.exec(string)) !== null) {
             var i = match.index;
@@ -119,7 +110,7 @@ var TextHandler = /** @class */ (function (_super) {
         string = String(string);
         old = String(old);
         replace = String(replace);
-        if (instances) {
+        if (instances != null) {
             for (var i = 0; i < Number(instances); ++i) {
                 string = string.replace(old, replace);
             }
@@ -137,6 +128,6 @@ var TextHandler = /** @class */ (function (_super) {
         return String(string).toUpperCase();
     };
     return TextHandler;
-}(AbstractNodeHandler_1.default));
-exports.default = TextHandler;
+}(__1.AbstractNodeHandler));
+exports.TextHandler = TextHandler;
 //# sourceMappingURL=TextHandler.js.map

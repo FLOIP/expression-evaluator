@@ -1,24 +1,10 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var AbstractNodeHandler_1 = __importDefault(require("./AbstractNodeHandler"));
+exports.MathHandler = void 0;
+var tslib_1 = require("tslib");
+var __1 = require("../../../..");
 var MathHandler = /** @class */ (function (_super) {
-    __extends(MathHandler, _super);
+    tslib_1.__extends(MathHandler, _super);
     function MathHandler() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -35,37 +21,37 @@ var MathHandler = /** @class */ (function (_super) {
         return Math.abs(this.value(number));
     };
     MathHandler.prototype.max = function () {
+        var _this = this;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        //@ts-ignore
-        return Math.max.apply(Math, (args.map(this.value).filter(function (x) { return !isNaN(x); })));
+        return Math.max.apply(Math, tslib_1.__spread((args.map(function (arg) { return _this.value(arg); }).filter(function (x) { return !isNaN(x); }))));
     };
     MathHandler.prototype.min = function () {
+        var _this = this;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        //@ts-ignore
-        return Math.min.apply(Math, (args.map(this.value).filter(function (x) { return !isNaN(x); })));
+        return Math.min.apply(Math, tslib_1.__spread((args.map(function (arg) { return _this.value(arg); }).filter(function (x) { return !isNaN(x); }))));
     };
     MathHandler.prototype.power = function (number, power) {
         return Math.pow(this.value(number), this.value(power));
     };
     MathHandler.prototype.sum = function () {
+        var _this = this;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        //@ts-ignore
-        return args.map(this.value).filter(function (x) { return !isNaN(x); })
+        return args.map(function (arg) { return _this.value(arg); }).filter(function (x) { return !isNaN(x); })
             .reduce(function (carry, n) { return carry += Number(n); });
     };
     MathHandler.prototype.value = function (item) {
         return Number(_super.prototype.value.call(this, item));
     };
     return MathHandler;
-}(AbstractNodeHandler_1.default));
-exports.default = MathHandler;
+}(__1.AbstractNodeHandler));
+exports.MathHandler = MathHandler;
 //# sourceMappingURL=MathHandler.js.map

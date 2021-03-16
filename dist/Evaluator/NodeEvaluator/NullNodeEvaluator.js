@@ -1,16 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Expression_1 = require("../../Contract/Expression");
+exports.NullNodeEvaluator = exports.NULL_TYPE = void 0;
+exports.NULL_TYPE = 'NULL';
 var NullNodeEvaluator = /** @class */ (function () {
     function NullNodeEvaluator() {
     }
     NullNodeEvaluator.prototype.handles = function () {
-        return Expression_1.NULL_TYPE;
+        return exports.NULL_TYPE;
     };
-    NullNodeEvaluator.prototype.evaluate = function (node, context) {
+    NullNodeEvaluator.prototype.evaluate = function (_node, _context) {
         return null;
     };
     return NullNodeEvaluator;
 }());
-exports.default = NullNodeEvaluator;
+exports.NullNodeEvaluator = NullNodeEvaluator;
 //# sourceMappingURL=NullNodeEvaluator.js.map

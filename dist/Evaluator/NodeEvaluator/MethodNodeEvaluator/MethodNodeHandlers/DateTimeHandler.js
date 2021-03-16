@@ -1,25 +1,11 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var AbstractNodeHandler_1 = __importDefault(require("./AbstractNodeHandler"));
-var moment_1 = __importDefault(require("moment"));
+exports.DateTimeHandler = void 0;
+var tslib_1 = require("tslib");
+var __1 = require("../../../..");
+var moment_1 = tslib_1.__importDefault(require("moment"));
 var DateTimeHandler = /** @class */ (function (_super) {
-    __extends(DateTimeHandler, _super);
+    tslib_1.__extends(DateTimeHandler, _super);
     function DateTimeHandler() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -80,13 +66,14 @@ var DateTimeHandler = /** @class */ (function (_super) {
         return moment_1.default();
     };
     DateTimeHandler.prototype.weekday = function (date) {
-        return moment_1.default(String(date)).weekday();
+        return moment_1.default(String(date)).isoWeekday();
     };
     DateTimeHandler.prototype.year = function (date) {
         return moment_1.default(this.value(date)).year();
     };
     DateTimeHandler.prototype.value = function (item) {
-        var v = _super.prototype.value.call(this, item);
+        // TODO: result of super.value is unused, is this an error, or is this an unnecessary call?
+        _super.prototype.value.call(this, item);
         if (moment_1.default.isMoment(item)) {
             return item;
         }
@@ -96,6 +83,6 @@ var DateTimeHandler = /** @class */ (function (_super) {
         return moment_1.default(this.value(date)).isBetween(moment_1.default(this.value(start)), moment_1.default(this.value(end)));
     };
     return DateTimeHandler;
-}(AbstractNodeHandler_1.default));
-exports.default = DateTimeHandler;
+}(__1.AbstractNodeHandler));
+exports.DateTimeHandler = DateTimeHandler;
 //# sourceMappingURL=DateTimeHandler.js.map

@@ -37,14 +37,4 @@ export interface Math extends Expression {
     rhs: any;
     operator: string;
 }
-export declare class ExpressionFactory {
-    static instance(data: Expression): Method | Member | Math | Logic | Escape | Concatenate;
-}
-export declare const METHOD_TYPE = "METHOD";
-export declare const MEMBER_TYPE = "MEMBER";
-export declare const MATH_TYPE = "MATH";
-export declare const LOGIC_TYPE = "LOGIC";
-export declare const ESCAPE_TYPE = "ESCAPE";
-export declare const NULL_TYPE = "NULL";
-export declare const CONCATENATE_TYPE = "CONCATENATE";
-export declare const IDENTIFIER = "@";
+//# sourceMappingURL=Expression.d.ts.map

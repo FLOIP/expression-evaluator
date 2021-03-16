@@ -1,16 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Expression_1 = require("../../Contract/Expression");
+exports.EscapeNodeEvaluator = exports.ESCAPE_TYPE = exports.IDENTIFIER = void 0;
+exports.IDENTIFIER = '@';
+exports.ESCAPE_TYPE = 'ESCAPE';
 var EscapeNodeEvaluator = /** @class */ (function () {
     function EscapeNodeEvaluator() {
     }
-    EscapeNodeEvaluator.prototype.evaluate = function (node, context) {
-        return Expression_1.IDENTIFIER;
+    EscapeNodeEvaluator.prototype.evaluate = function (_node, _context) {
+        return exports.IDENTIFIER;
     };
     EscapeNodeEvaluator.prototype.handles = function () {
-        return Expression_1.ESCAPE_TYPE;
+        return exports.ESCAPE_TYPE;
     };
     return EscapeNodeEvaluator;
 }());
-exports.default = EscapeNodeEvaluator;
+exports.EscapeNodeEvaluator = EscapeNodeEvaluator;
 //# sourceMappingURL=EscapeNodeEvaluator.js.map

@@ -1,5 +1,6 @@
-import { Expression } from "../Contract/Expression";
-export default class Node {
+import {Expression} from "../";
+
+export declare class Node {
     data: Expression;
     value: any;
     constructor(data: object);
@@ -15,3 +16,4 @@ export default class Node {
     type(): string;
     toString(): string;
 }
+//# sourceMappingURL=Node.d.ts.map

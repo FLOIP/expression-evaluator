@@ -1,68 +1,71 @@
-import { NodeEvaluator } from ".";
-import { Logic, LOGIC_TYPE } from "../../Contract/Expression";
-import { NodeShapeError, NodeEvaluatorError } from "./Exception";
-import Node from "../Node";
+import {Logic, Node, NodeEvaluator, NodeEvaluatorError, NodeShapeError} from "../.."
 
-export default class LogicNodeEvaluator implements NodeEvaluator {
-	evaluate(node: import("../Node").default, context: object) {
-		const data : Logic = node.data as Logic;
+export const LOGIC_TYPE = 'LOGIC'
 
-		this.typeGuard(data);
+export class LogicNodeEvaluator implements NodeEvaluator {
 
-		let lhs = this.value(data.lhs);
-		let rhs = this.value(data.rhs);
+  evaluate(node: Node, _context: object): boolean {
+    const data: Logic = node.data as Logic
 
-		if (!isNaN(lhs)) {
-			lhs = Number(lhs);
-		}
-		if (!isNaN(rhs)) {
-			rhs = Number(rhs);
-		}
+    this.typeGuard(data)
 
-		const operator = data.operator;
+    let lhs = this.value(data.lhs)
+    let rhs = this.value(data.rhs)
 
-		switch(operator) {
-            case '<':
-                return lhs < rhs;
-            case '<=':
-                return lhs <= rhs;
-            case '>':
-                return lhs > rhs;
-            case '>=':
-                return lhs >= rhs;
-            case '=':
-                return lhs == rhs;
-            case '!=':
-            case '<>':
-                return lhs !== rhs;
-		}
-		throw new NodeEvaluatorError(`${operator} is not a valid logic operator`);
-	}
-	
-	handles(): string {
-		return LOGIC_TYPE;
-	}
+    if (!isNaN(Number(lhs))) {
+      lhs = Number(lhs)
+    }
+    if (!isNaN(Number(rhs))) {
+      rhs = Number(rhs)
+    }
 
-	private value(item) {
-		if (item instanceof Node) {
-			item = item.value;
-		}
-		if (typeof item === 'string') {
-			if (item.toUpperCase() === 'TRUE') {
-				return true;
-			}
-			if (item.toUpperCase() === 'FALSE') {
-				return false;
-			}
-		}
-		return item;
-	}
+    const operator = data.operator
 
-	private typeGuard(logic : Logic) {
-		for (let key of ['rhs' , 'lhs', 'operator']) {
-			if (!(key in logic)) {
-				throw new NodeShapeError('Logic node is the wrong shape, should have "rhs", "lhs", "operator"');
-			}
-		}
-	}
+    switch (operator) {
+      case '<':
+        return lhs < rhs
+      case '<=':
+        return lhs <= rhs
+      case '>':
+        return lhs > rhs
+      case '>=':
+        return lhs >= rhs
+      case '=':
+        return lhs == rhs
+      case '!=':
+      case '<>':
+        return lhs !== rhs
+    }
+    throw new NodeEvaluatorError(`${operator} is not a valid logic operator`)
+  }
+
+  handles(): string {
+    return LOGIC_TYPE
+  }
+
+  private value(item): any {
+    if (item instanceof Node) {
+      item = item.value
+    }
+
+    if (typeof item === 'string') {
+      if (item.toUpperCase() === 'TRUE') {
+        return true
+      } else if (item.toUpperCase() === 'FALSE') {
+        return false
+      } else {
+        return item
+      }
+    } else {
+      return item
+    }
+  }
+
+  private typeGuard(logic: Logic): void {
+    for (const key of ['rhs', 'lhs', 'operator']) {
+      if (!(key in logic)) {
+        throw new NodeShapeError('Logic node is the wrong shape, should have "rhs", "lhs", "operator"')
+      }
+    }
+  }
 }

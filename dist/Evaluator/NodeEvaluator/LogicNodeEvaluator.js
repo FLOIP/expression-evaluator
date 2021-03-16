@@ -1,23 +1,21 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var Expression_1 = require("../../Contract/Expression");
-var Exception_1 = require("./Exception");
-var Node_1 = __importDefault(require("../Node"));
+exports.LogicNodeEvaluator = exports.LOGIC_TYPE = void 0;
+var tslib_1 = require("tslib");
+var __1 = require("../..");
+exports.LOGIC_TYPE = 'LOGIC';
 var LogicNodeEvaluator = /** @class */ (function () {
     function LogicNodeEvaluator() {
     }
-    LogicNodeEvaluator.prototype.evaluate = function (node, context) {
+    LogicNodeEvaluator.prototype.evaluate = function (node, _context) {
         var data = node.data;
         this.typeGuard(data);
         var lhs = this.value(data.lhs);
         var rhs = this.value(data.rhs);
-        if (!isNaN(lhs)) {
+        if (!isNaN(Number(lhs))) {
             lhs = Number(lhs);
         }
-        if (!isNaN(rhs)) {
+        if (!isNaN(Number(rhs))) {
             rhs = Number(rhs);
         }
         var operator = data.operator;
@@ -36,34 +34,49 @@ var LogicNodeEvaluator = /** @class */ (function () {
             case '<>':
                 return lhs !== rhs;
         }
-        throw new Exception_1.NodeEvaluatorError(operator + " is not a valid logic operator");
+        throw new __1.NodeEvaluatorError(operator + " is not a valid logic operator");
     };
     LogicNodeEvaluator.prototype.handles = function () {
-        return Expression_1.LOGIC_TYPE;
+        return exports.LOGIC_TYPE;
     };
     LogicNodeEvaluator.prototype.value = function (item) {
-        if (item instanceof Node_1.default) {
+        if (item instanceof __1.Node) {
             item = item.value;
         }
         if (typeof item === 'string') {
             if (item.toUpperCase() === 'TRUE') {
                 return true;
             }
-            if (item.toUpperCase() === 'FALSE') {
+            else if (item.toUpperCase() === 'FALSE') {
                 return false;
             }
+            else {
+                return item;
+            }
         }
-        return item;
+        else {
+            return item;
+        }
     };
     LogicNodeEvaluator.prototype.typeGuard = function (logic) {
-        for (var _i = 0, _a = ['rhs', 'lhs', 'operator']; _i < _a.length; _i++) {
-            var key = _a[_i];
-            if (!(key in logic)) {
-                throw new Exception_1.NodeShapeError('Logic node is the wrong shape, should have "rhs", "lhs", "operator"');
+        var e_1, _a;
+        try {
+            for (var _b = tslib_1.__values(['rhs', 'lhs', 'operator']), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var key = _c.value;
+                if (!(key in logic)) {
+                    throw new __1.NodeShapeError('Logic node is the wrong shape, should have "rhs", "lhs", "operator"');
+                }
             }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
     };
     return LogicNodeEvaluator;
 }());
-exports.default = LogicNodeEvaluator;
+exports.LogicNodeEvaluator = LogicNodeEvaluator;
 //# sourceMappingURL=LogicNodeEvaluator.js.map

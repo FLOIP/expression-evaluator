@@ -1,6 +1,6 @@
-import AbstractNodeHandler from "./AbstractNodeHandler";
-import Node from "../../../Node";
-export default class TextHandler extends AbstractNodeHandler {
+import {AbstractNodeHandler, Node} from "../../../..";
+
+export declare class TextHandler extends AbstractNodeHandler {
     handles(): string[];
     char(asciiCode: number | Node): string;
     clean(string: string | Node): string;
@@ -14,8 +14,9 @@ export default class TextHandler extends AbstractNodeHandler {
     proper(string: string | Node): string;
     rept(string: string | Node, times: number | Node): string;
     right(string: string | Node, chars: number | Node): string;
-    substitute(string: string | Node, old: string | Node, replace: string | Node, instances?: number | null): string;
+    substitute(string: string | Node, old: string | Node, replace: string | Node, instances?: number | null): string | Node;
     unichar(unicode: number | Node): string;
     unicode(string: string | Node): number | undefined;
     upper(string: string | Node): string;
 }
+//# sourceMappingURL=TextHandler.d.ts.map

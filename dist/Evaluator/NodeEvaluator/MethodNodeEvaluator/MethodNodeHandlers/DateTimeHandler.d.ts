@@ -1,7 +1,7 @@
-import AbstractNodeHandler from "./AbstractNodeHandler";
-import Node from "../../../Node";
-import { Moment, Duration } from 'moment';
-export default class DateTimeHandler extends AbstractNodeHandler {
+import {AbstractNodeHandler, Node} from "../../../..";
+import {Duration, Moment} from 'moment';
+
+export declare class DateTimeHandler extends AbstractNodeHandler {
     handles(): string[];
     date(year: number | Node, month: number | Node, day: number | Node): Moment;
     datevalue(dateString: string | Node): Moment;
@@ -20,3 +20,4 @@ export default class DateTimeHandler extends AbstractNodeHandler {
     protected value(item: any): string | Moment;
     between(date: string | Node, start: string | Node, end: string | Node): boolean;
 }
+//# sourceMappingURL=DateTimeHandler.d.ts.map

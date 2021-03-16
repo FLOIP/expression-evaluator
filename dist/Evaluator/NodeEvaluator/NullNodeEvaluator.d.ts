@@ -1,6 +1,8 @@
-import { NodeEvaluator } from ".";
-import Node from "../Node";
-export default class NullNodeEvaluator implements NodeEvaluator {
+import {Node, NodeEvaluator} from "../..";
+
+export declare const NULL_TYPE = "NULL";
+export declare class NullNodeEvaluator implements NodeEvaluator {
     handles(): string;
-    evaluate(node: Node, context: object): null;
+    evaluate(_node: Node, _context: object): null;
 }
+//# sourceMappingURL=NullNodeEvaluator.d.ts.map
