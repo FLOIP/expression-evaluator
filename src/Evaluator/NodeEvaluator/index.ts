@@ -1,20 +1,23 @@
-import Node from '../Node';
+import Node from '../Node'
 
 interface NodeValue {
-	value: any,
-	toString(): string;
+  value: any,
+
+  toString(): string,
 }
 
 interface NodeEvaluator {
-	evaluate(node: Node, context: object) : any;
-	handles(): string;
+  evaluate(node: Node, context: object): any,
+
+  handles(): string,
 }
 
-class NodeEvaluatorException extends Error {}
+class NodeEvaluatorException extends Error {
+}
 
 export {
-	NodeValue,
-	NodeEvaluatorException,
-	NodeEvaluator,
+  NodeValue,
+  NodeEvaluatorException,
+  NodeEvaluator,
 }
 

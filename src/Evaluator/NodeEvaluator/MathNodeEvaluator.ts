@@ -1,103 +1,103 @@
-import { NodeEvaluator } from ".";
-import Node from "../Node";
-import { Math as MathExpression, MATH_TYPE } from "../../Contract/Expression";
-import { NodeShapeError, NodeEvaluatorError } from "./Exception";
-import moment, { Moment, Duration, DurationInputArg2 } from 'moment';
+import {NodeEvaluator} from "."
+import Node from "../Node"
+import {Math as MathExpression, MATH_TYPE} from "../../Contract/Expression"
+import {NodeEvaluatorError, NodeShapeError} from "./Exception"
+import moment, {Duration, DurationInputArg2, Moment} from 'moment'
 
 const DATE_INTERVAL_REGEX = /^([0-9]+)\s(\w+)$/i
 
 export default class MathNodeEvaluator implements NodeEvaluator {
-	evaluate(node: Node, context: object) {
-		const data : MathExpression = node.data as MathExpression;
+  evaluate(node: Node, context: object) {
+    const data: MathExpression = node.data as MathExpression
 
-		this.typeGuard(data);
+    this.typeGuard(data)
 
-		const lhs = this.value(data.lhs);
-		const rhs = this.value(data.rhs);
-		const operator = data.operator;
+    const lhs = this.value(data.lhs)
+    const rhs = this.value(data.rhs)
+    const operator = data.operator
 
-		// special handling for math operations on dates
-		if (typeof lhs === 'object' || typeof rhs === 'object') {
-			if (moment.isMoment(lhs)) {
-				if (moment.isDuration(rhs)) {
-					return this.evaluateDateMath(lhs, rhs, operator);
-				}
-				// can only add durations to dates
-				throw new NodeEvaluatorError(`When lhs of equation is a date, rhs, must be a duration, got ${typeof rhs}`)
-			}
-			throw new NodeEvaluatorError(`Can only perform math on numbers or date/time, got ${typeof lhs} and ${typeof rhs}`)
-		}
-
-		switch(operator) {
-            case '+':
-                return lhs + rhs;
-            case '-':
-                return lhs - rhs;
-            case '/':
-                return lhs / rhs;
-            case '*':
-                return lhs * rhs;
-            case '^':
-				return Math.pow(lhs, rhs);
+    // special handling for math operations on dates
+    if (typeof lhs === 'object' || typeof rhs === 'object') {
+      if (moment.isMoment(lhs)) {
+        if (moment.isDuration(rhs)) {
+          return this.evaluateDateMath(lhs, rhs, operator)
         }
-	}
+        // can only add durations to dates
+        throw new NodeEvaluatorError(`When lhs of equation is a date, rhs, must be a duration, got ${typeof rhs}`)
+      }
+      throw new NodeEvaluatorError(`Can only perform math on numbers or date/time, got ${typeof lhs} and ${typeof rhs}`)
+    }
 
-	private evaluateDateMath(lhs : Moment, rhs : Duration, operator) {
-		switch(operator) {
-			case '+':
-				return lhs.add(rhs);
-			case '-':
-				return lhs.subtract(rhs);
-		}
-		throw new NodeEvaluatorError(`Cannot perform operation ${operator} on dates`)
-	}
+    switch (operator) {
+      case '+':
+        return lhs + rhs
+      case '-':
+        return lhs - rhs
+      case '/':
+        return lhs / rhs
+      case '*':
+        return lhs * rhs
+      case '^':
+        return Math.pow(lhs, rhs)
+    }
+  }
 
-	handles(): string {
-		return MATH_TYPE;
-	}
+  private evaluateDateMath(lhs: Moment, rhs: Duration, operator) {
+    switch (operator) {
+      case '+':
+        return lhs.add(rhs)
+      case '-':
+        return lhs.subtract(rhs)
+    }
+    throw new NodeEvaluatorError(`Cannot perform operation ${operator} on dates`)
+  }
 
-	value(item) {
-		if (item instanceof Node) {
-			item = item.value;
-		}
-		if (moment.isDuration(item) || moment.isMoment(item)) {
-			return item;
-		}
-		if (!isNaN(item)) {
-			return Number(item);
-		}
-		const date = this.parseDateTime(item)
-		if (date) {
-			return date
-		}
-		throw new NodeEvaluatorError(`Can only perform math on numbers, got ${item}`)
-	}
+  handles(): string {
+    return MATH_TYPE
+  }
 
-	parseDateTime(thing) {
-		const res = DATE_INTERVAL_REGEX.exec(thing)
+  value(item) {
+    if (item instanceof Node) {
+      item = item.value
+    }
+    if (moment.isDuration(item) || moment.isMoment(item)) {
+      return item
+    }
+    if (!isNaN(item)) {
+      return Number(item)
+    }
+    const date = this.parseDateTime(item)
+    if (date) {
+      return date
+    }
+    throw new NodeEvaluatorError(`Can only perform math on numbers, got ${item}`)
+  }
 
-		if (res === null) {
-			return false
-		}
+  parseDateTime(thing) {
+    const res = DATE_INTERVAL_REGEX.exec(thing)
 
-		if (res.length == 3) {
-			return moment.duration(res[1], res[2] as DurationInputArg2)
-		}
+    if (res === null) {
+      return false
+    }
 
-		const m = moment(thing)
+    if (res.length == 3) {
+      return moment.duration(res[1], res[2] as DurationInputArg2)
+    }
 
-		if (m.isValid()) {
-			return m
-		}
+    const m = moment(thing)
 
-		return false
-	}	
+    if (m.isValid()) {
+      return m
+    }
 
-	private typeGuard(math : MathExpression) {
-		for (let key of ['rhs', 'lhs', 'operator']) {
-			if (!(key in math)) {
-				throw new NodeShapeError('Math node is the wrong shape, should have "rhs", "lhs", "operator"');
-			}
-		}
-	}
+    return false
+  }
+
+  private typeGuard(math: MathExpression) {
+    for (const key of ['rhs', 'lhs', 'operator']) {
+      if (!(key in math)) {
+        throw new NodeShapeError('Math node is the wrong shape, should have "rhs", "lhs", "operator"')
+      }
+    }
+  }
 }
