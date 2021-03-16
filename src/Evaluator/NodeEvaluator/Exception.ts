@@ -1,4 +1,6 @@
-export class NodeEvaluatorError extends Error {
+import {EvaluatorError} from '../Exception'
+
+export class NodeEvaluatorError extends EvaluatorError {
 	//
 }
 
