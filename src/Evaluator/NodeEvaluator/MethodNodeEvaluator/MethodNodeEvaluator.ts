@@ -8,21 +8,21 @@ export interface MethodNodeHandler {
 
 export class MethodNodeEvaluator implements NodeEvaluator {
 
-  private handlers: Map<string, MethodNodeHandler>;
+  private handlers = {};
 
   constructor() {
-    this.handlers = new Map()
+    this.handlers = {}
   }
 
   public addHandler(handler: MethodNodeHandler): this {
     for (const method of handler.handles()) {
-      this.handlers.set(method, handler)
+      this.handlers[method] = handler
     }
     return this
   }
 
   public getHandler(method: string): MethodNodeHandler {
-    const ret = this.handlers.get(method)
+    const ret = this.handlers[method]
     if (ret !== undefined) {
       return ret
     } else {
