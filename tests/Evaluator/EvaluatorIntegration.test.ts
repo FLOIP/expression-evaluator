@@ -501,3 +501,35 @@ describe.each(stringDateMathProvider)(
     })
   }
 )
+
+it('testInGroupsNestedMemberObject', () => {
+	const trueCase = '@(IN(groups.group, contact.groups))'
+	const falseCase = '@(IN(groups.group2, contact.groups))'
+	const context = {
+		'groups': {
+			'group': {
+				'__value__': 'group0'
+			},
+			'group1': {
+				'__value__': 'group1'
+			},
+			'group2': {
+				'__value__': 'group2'
+			}
+		},
+		'contact': {
+			'groups': {
+				'group0': {
+					'__value__': 'group0'
+				},
+				'group1': {
+					'__value__': 'group1'
+				}
+			}
+		}
+	}
+
+	expect(evaluator.evaluate(trueCase, context)).toBe('TRUE');
+	expect(evaluator.evaluate(falseCase, context)).toBe('FALSE')
+	expect(evaluator.evaluate('@(COUNT(contact.groups))', context)).toBe('2')
+})

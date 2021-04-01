@@ -83,3 +83,8 @@ it('bug scrub', () => {
 
   expect(evaluator.evaluate(e, c)).toBeTruthy()
 })
+
+it('true/false mcq', () => {
+	expect(evaluator.evaluate('True', {})).toBe('True')
+	expect(evaluator.evaluate('False', {})).toBe('False')
+})

@@ -19,12 +19,23 @@ export class ArrayHandler extends AbstractNodeHandler {
       search = array.value
     }
 
-    if (!Array.isArray(search)) {
-      throw new NodeEvaluatorError(`Can only perform IN on an array, got ${typeof search}`)
-    } else {
-      // we use some instead of includes for loose comparison
-      return (search).some((item) => item == value)
+    if (!(Array.isArray(search) || this.isIterable(search))) {
+      throw new NodeEvaluatorError(`Can only perform IN on an array or iterable, got ${typeof search}`)
     }
+
+    for (let val of (search as Iterable<any>)) {
+      if (String(val) === String(value)) {
+          return true
+      }
+    }
+  return false
+  }
+
+  private isIterable(obj) {
+    if (obj == null) {
+        return false
+    }
+    return typeof obj[Symbol.iterator] === 'function'
   }
 
   public count(array: Node | any[]): number {
@@ -33,10 +44,10 @@ export class ArrayHandler extends AbstractNodeHandler {
       arr = array.value
     }
 
-    if (!Array.isArray(arr)) {
+    if (!(Array.isArray(arr) || 'length' in arr)) {
       throw new NodeEvaluatorError(`Can only perform COUNT on an array, got ${typeof arr}`)
     } else {
-      return arr.length
+      return (arr as Array<any>).length
     }
   }
 }

@@ -1,4 +1,4 @@
-import {Member, Node, NodeEvaluator, NodeShapeError,} from '../..'
+import {Member, MemberObject, Node, NodeEvaluator, NodeShapeError,} from '../..'
 import moment from "moment"
 
 export const MEMBER_TYPE = 'MEMBER'
@@ -43,7 +43,7 @@ export class MemberNodeEvaluator implements NodeEvaluator {
       } else if (moment.isMoment(currentContext)) {
         return currentContext
       } else {
-        return JSON.stringify(currentContext)
+        return new MemberObject(currentContext)
       }
     } else if (typeof currentContext === 'undefined') {
       // if we hit an undefined value, just return the compound key
