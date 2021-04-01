@@ -91,3 +91,8 @@ it('throws something on undefined input', () => {
 	//@ts-ignore
 	expect(() => {evaluator.evaluate('', undefined)}).toThrow()
 })
+
+it('true/false mcq', () => {
+	expect(evaluator.evaluate('True', {})).toBe('True')
+	expect(evaluator.evaluate('False', {})).toBe('False')
+})
