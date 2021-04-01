@@ -84,6 +84,14 @@ it('bug scrub', () => {
   expect(evaluator.evaluate(e, c)).toBeTruthy()
 })
 
+it('throws something on undefined input', () => {
+	//@ts-ignore
+	expect(() => {evaluator.evaluate(undefined, {})}).toThrow()
+
+	//@ts-ignore
+	expect(() => {evaluator.evaluate('', undefined)}).toThrow()
+})
+
 it('true/false mcq', () => {
 	expect(evaluator.evaluate('True', {})).toBe('True')
 	expect(evaluator.evaluate('False', {})).toBe('False')

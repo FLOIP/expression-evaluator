@@ -249,3 +249,16 @@ it('should treat undefined properties as not existing', () => {
   }
   expect(evaluator.evaluate(node, ctx)).toEqual('flow.block.value')
 })
+
+it('should treat undefined magic properties as not existing', () => {
+	const node = makeNode('flow.contact')
+	const ctx = {
+		contact: {
+			name: {
+				value: undefined,
+				__value__: undefined
+			}
+		}
+	}
+	expect(evaluator.evaluate(node, ctx)).toEqual('flow.contact')
+})
