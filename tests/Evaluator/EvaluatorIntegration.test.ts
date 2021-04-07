@@ -493,7 +493,7 @@ const stringDateMathProvider: Array<[string, object, string]> = [
   ]
 ]
 
-it('casts string on split_word', () => {
+it('casts string on word_slice', () => {
   const now = (new Date('2020-01-01 00:00:00')).getTime()
   jest.spyOn(Date, 'now').mockReturnValue(now)
 
