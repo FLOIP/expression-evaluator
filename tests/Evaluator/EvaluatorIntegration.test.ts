@@ -493,6 +493,15 @@ const stringDateMathProvider: Array<[string, object, string]> = [
   ]
 ]
 
+it('casts string on split_word', () => {
+  const now = (new Date('2020-01-01 00:00:00')).getTime()
+  jest.spyOn(Date, 'now').mockReturnValue(now)
+
+  const expected = "Today in simple date: Jan 01 2020"
+
+  expect(evaluator.evaluate("Today in simple date: @(word_slice(today(),2,5,true))", {})).toBe(expected)
+})
+
 describe.each(stringDateMathProvider)(
   'string math %#',
   (expression, context, expected) => {
