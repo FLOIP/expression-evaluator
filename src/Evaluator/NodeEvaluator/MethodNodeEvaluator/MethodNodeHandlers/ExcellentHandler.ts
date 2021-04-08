@@ -32,10 +32,11 @@ export class ExcellentHandler implements MethodNodeHandler {
   }
 
   public remove_fist_word(string: string): string {
-    return string.substr(this.first_word(string).length)
+    return String(string).substr(this.first_word(string).length)
   }
 
   public word(string: string, number: number, bySpaces?: boolean): string {
+    string = String(string)
     const split = bySpaces ? string.split(' ') : this.splitByPunc(string)
 
     if (number < 0) {
@@ -46,17 +47,18 @@ export class ExcellentHandler implements MethodNodeHandler {
   }
 
   private splitByPunc(string: string): Array<string> {
-    return string.split(/\s*[,:;!?.-]\s*|\s/g).filter(a => a)
+    return String(string).split(/\s*[,:;!?.-]\s*|\s/g).filter(a => a)
   }
 
   public word_count(string: string, bySpaces?: boolean): number {
     if (bySpaces) {
-      return string.split(' ').length
+      return String(string).split(' ').length
     }
     return this.splitByPunc(string).length
   }
 
   public word_slice(string: string, start: number, stop?: number, bySpaces?: boolean): string {
+    string = String(string)
     let split = bySpaces ? string.split(' ') : this.splitByPunc(string)
 
     if (typeof stop === 'undefined') {
