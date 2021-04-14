@@ -12,10 +12,10 @@ export class LogicNodeEvaluator implements NodeEvaluator {
     let lhs = this.value(data.lhs)
     let rhs = this.value(data.rhs)
 
-    if (!isNaN(Number(lhs))) {
+    if (this.isNumber(lhs)) {
       lhs = Number(lhs)
     }
-    if (!isNaN(Number(rhs))) {
+    if (this.isNumber(rhs)) {
       rhs = Number(rhs)
     }
 
@@ -43,6 +43,19 @@ export class LogicNodeEvaluator implements NodeEvaluator {
     return LOGIC_TYPE
   }
 
+  private isNumber(item: unknown): boolean {
+    if (typeof item === 'number') {
+      return true
+    }
+    if (typeof item !== 'string') {
+      return false
+    }
+    if (item === '') {
+      return false
+    }
+    return !isNaN(Number(item)) 
+  }
+
   private value(item): any {
     if (item instanceof Node) {
       item = item.value
@@ -51,14 +64,15 @@ export class LogicNodeEvaluator implements NodeEvaluator {
     if (typeof item === 'string') {
       if (item.toUpperCase() === 'TRUE') {
         return true
-      } else if (item.toUpperCase() === 'FALSE') {
-        return false
-      } else {
-        return item
       }
-    } else {
-      return item
+      if (item.toUpperCase() === 'FALSE') {
+        return false
+      }
+      if (item === '') {
+        return null
+      }
     }
+    return item
   }
 
   private typeGuard(logic: Logic): void {

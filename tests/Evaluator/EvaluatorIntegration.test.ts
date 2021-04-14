@@ -542,3 +542,14 @@ it('testInGroupsNestedMemberObject', () => {
 	expect(evaluator.evaluate(falseCase, context)).toBe('FALSE')
 	expect(evaluator.evaluate('@(COUNT(contact.groups))', context)).toBe('2')
 })
+
+test('VMO-3423 false should not be equal to null', () => {
+  const ctx = {
+    block: {
+      value: "False"
+    }
+  }
+  const exp = "@(block.value != NULL)"
+
+  expect(evaluator.evaluate(exp, ctx)).toBe('TRUE')
+})
