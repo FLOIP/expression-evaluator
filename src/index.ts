@@ -25,3 +25,4 @@ export * from './Evaluator/NodeEvaluator/MethodNodeEvaluator/MethodNodeHandlers/
 export * from './Evaluator/NodeEvaluator/MethodNodeEvaluator/MethodNodeHandlers/TextHandler'
 export * from './Evaluator/NodeEvaluator/MemberNodeEvaluator/MemberObject'
 export * from './Evaluator/NodeEvaluator/MethodNodeEvaluator/MethodNodeEvaluatorError'
+export * from './Evaluator/NodeEvaluator/BoolNodeEvaluator'

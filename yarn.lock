@@ -220,9 +220,9 @@
     strip-json-comments "^3.1.1"
 
 "@floip/expression-parser@^1.10.0":
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/@floip/expression-parser/-/expression-parser-1.10.0.tgz#386cb9fbfb2afc951daae40e03845a87bacf3509"
-  integrity sha512-pLR8p2z6q87O9c1XkP4DYfuEX+cKMn14a4jYkZ/t4ky1k+MEvp69zj662xJTzCkbH3ABsrwaxx7fP1FWASlEZw==
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@floip/expression-parser/-/expression-parser-1.11.0.tgz#0d93371008c701e2867cf027a23f72160beaff22"
+  integrity sha512-oTM8omN3J+xJNfBUPaG06lRoKm39XrY9a4GgEJ+ONMEJGGajLRvdKVMdj8/epZ2Bme32B6EyvXmrU5StqamfoQ==
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"

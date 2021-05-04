@@ -46,3 +46,7 @@ export interface Math extends Expression {
   rhs: any,
   operator: string,
 }
+
+export interface Bool extends Expression {
+  value: any
+}

@@ -113,7 +113,8 @@ const logicProvider: Array<[string, object, string]> = [
     }
   }, 'FALSE'
   ],
-  ['@(and(1 = 1, 3 = 3))', {}, 'TRUE']
+  ['@(and(1 = 1, 3 = 3))', {}, 'TRUE'],
+  ['@(TRUE <> FALSE)', {}, 'TRUE']
 ]
 
 describe.each(logicProvider)(
@@ -541,4 +542,11 @@ it('testInGroupsNestedMemberObject', () => {
 	expect(evaluator.evaluate(trueCase, context)).toBe('TRUE');
 	expect(evaluator.evaluate(falseCase, context)).toBe('FALSE')
 	expect(evaluator.evaluate('@(COUNT(contact.groups))', context)).toBe('2')
+})
+
+it('evaluates bool keyword', () => {
+  const expression = "Hello @(true) it's @(false) and @(true = true) but not @(true = false)";
+  const context = {}
+
+  expect(evaluator.evaluate(expression, context)).toEqual('Hello TRUE it\'s FALSE and TRUE but not FALSE')
 })
