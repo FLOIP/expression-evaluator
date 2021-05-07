@@ -30,13 +30,13 @@ export class MethodNodeEvaluator implements NodeEvaluator {
     }
   }
 
-  evaluate(node: Node, context: object): any {
+  evaluate(node: Node, _context: object): any {
     const method: Method = node.data as Method
 
     this.typeGuard(method)
 
     const call = method.call.toLowerCase()
-    const args = method.args.map((item) => this.value(item)).concat(context)
+    const args = method.args.map((item) => this.value(item))
 
     const handler = this.getHandler(call)
 

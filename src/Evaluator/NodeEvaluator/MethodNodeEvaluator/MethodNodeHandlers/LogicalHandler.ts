@@ -10,7 +10,7 @@ export class LogicalHandler extends AbstractNodeHandler {
   }
 
   public and(...args: any[]): boolean {
-    for (const arg of args.map(arg => this.value(arg)).filter(arg => super.isScalar(arg))) {
+    for (const arg of args.map(arg => this.value(arg))) {
       if (!arg) {
         return false
       }
@@ -19,7 +19,7 @@ export class LogicalHandler extends AbstractNodeHandler {
   }
 
   public if(...args: any[]): any {
-    args = args.map(arg => this.value(arg)).filter(arg => super.isScalar(arg))
+    args = args.map(arg => this.value(arg))
     if (args.length != 3) {
       throw new NodeEvaluatorError()
     }
@@ -27,7 +27,7 @@ export class LogicalHandler extends AbstractNodeHandler {
   }
 
   public or(...args: any[]): boolean {
-    for (const arg of args.map(arg => this.value(arg)).filter(arg => super.isScalar(arg))) {
+    for (const arg of args.map(arg => this.value(arg))) {
       if (arg) {
         return true
       }
