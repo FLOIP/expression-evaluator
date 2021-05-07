@@ -11,6 +11,6 @@ export abstract class AbstractNodeHandler implements MethodNodeHandler {
     if (item instanceof Node) {
       item = item.value
     }
-    return (/boolean|number|string/).test(typeof item)
+    return (/boolean|number|string|null/).test(typeof item) || item === null
   }
 }

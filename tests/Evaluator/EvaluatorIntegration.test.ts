@@ -550,3 +550,29 @@ it('evaluates bool keyword', () => {
 
   expect(evaluator.evaluate(expression, context)).toEqual('Hello TRUE it\'s FALSE and TRUE but not FALSE')
 })
+
+it('should evaluate if with null value', () => {
+  const expr = "@(IF(ISNUMBER(flow.1620421744601_32.value), flow.1620421744601_32.value, NULL))"
+  const ctx = {
+    flow: {
+      "1620421744601_32": {
+        value: "String"
+      }
+    }
+  }
+
+  expect(evaluator.evaluate(expr, ctx)).toEqual('NULL')
+})
+
+it('bug scrub', () => {
+  const expr = "@(IF(ISSTRING(flow.1620421744601_32.value), flow.1620421744601_32.value, 'Hello'))"
+  const ctx = {
+    flow: {
+      "1620421744601_32": {
+        value: 'ONE'
+      }
+    }
+  }
+
+  expect(evaluator.evaluate(expr, ctx)).toEqual('ONE')
+})
