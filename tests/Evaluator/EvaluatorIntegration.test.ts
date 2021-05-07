@@ -576,3 +576,9 @@ it('bug scrub', () => {
 
   expect(evaluator.evaluate(expr, ctx)).toEqual('ONE')
 })
+
+it('should evaluate if with empty string value', () => {
+  const expr = "@(IF(false, 'foobar', ''))"
+
+  expect(evaluator.evaluate(expr, {})).toEqual('')
+})
