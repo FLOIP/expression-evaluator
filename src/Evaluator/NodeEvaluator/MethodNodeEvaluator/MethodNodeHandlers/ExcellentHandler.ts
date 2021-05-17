@@ -1,4 +1,5 @@
 import {MethodNodeHandler, Node} from "../../../.."
+import { MethodNodeEvaluatorError } from "../MethodNodeEvaluatorError"
 
 export class ExcellentHandler implements MethodNodeHandler {
   public handles(): string[] {
@@ -15,7 +16,9 @@ export class ExcellentHandler implements MethodNodeHandler {
       'is_bool',
       'isbool',
       'isnumber',
-      'isstring'
+      'isstring',
+      'rand',
+      'rand_between'
     ]
   }
 
@@ -140,5 +143,18 @@ export class ExcellentHandler implements MethodNodeHandler {
 
   public isstring(value: any): boolean {
     return this.is_string(value)
+  }
+
+  public rand(): number {
+    return Math.random()
+  }
+
+  public rand_between(min: unknown, max: unknown): number {
+    const intMin = Math.trunc(Number(min))
+    const intMax = Math.trunc(Number(max))
+    if (Number.isNaN(intMin) || Number.isNaN(intMax)) {
+      throw new MethodNodeEvaluatorError(`rand_between requires numbers, got ${min}, ${max}`)
+    }
+    return Math.floor(Math.random() * (intMax - intMin + 1)) + intMin
   }
 }

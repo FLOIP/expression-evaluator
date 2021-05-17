@@ -113,7 +113,8 @@ const logicProvider: Array<[string, object, string]> = [
     }
   }, 'FALSE'
   ],
-  ['@(and(1 = 1, 3 = 3))', {}, 'TRUE']
+  ['@(and(1 = 1, 3 = 3))', {}, 'TRUE'],
+  ['@(TRUE <> FALSE)', {}, 'TRUE']
 ]
 
 describe.each(logicProvider)(
@@ -552,4 +553,43 @@ test('VMO-3423 false should not be equal to null', () => {
   const exp = "@(block.value != NULL)"
 
   expect(evaluator.evaluate(exp, ctx)).toBe('TRUE')
+})
+
+it('evaluates bool keyword', () => {
+  const expression = "Hello @(true) it's @(false) and @(true = true) but not @(true = false)";
+  const context = {}
+
+  expect(evaluator.evaluate(expression, context)).toEqual('Hello TRUE it\'s FALSE and TRUE but not FALSE')
+})
+
+it('should evaluate if with null value', () => {
+  const expr = "@(IF(ISNUMBER(flow.1620421744601_32.value), flow.1620421744601_32.value, NULL))"
+  const ctx = {
+    flow: {
+      "1620421744601_32": {
+        value: "String"
+      }
+    }
+  }
+
+  expect(evaluator.evaluate(expr, ctx)).toEqual('NULL')
+})
+
+it('bug scrub', () => {
+  const expr = "@(IF(ISSTRING(flow.1620421744601_32.value), flow.1620421744601_32.value, 'Hello'))"
+  const ctx = {
+    flow: {
+      "1620421744601_32": {
+        value: 'ONE'
+      }
+    }
+  }
+
+  expect(evaluator.evaluate(expr, ctx)).toEqual('ONE')
+})
+
+it('should evaluate if with empty string value', () => {
+  const expr = "@(IF(false, 'foobar', ''))"
+
+  expect(evaluator.evaluate(expr, {})).toEqual('')
 })

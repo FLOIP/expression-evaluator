@@ -9,6 +9,7 @@ import {
   MethodNodeEvaluatorFactory,
   NodeEvaluator,
   NullNodeEvaluator,
+  BoolNodeEvaluator
 } from ".."
 
 // noinspection JSUnusedGlobalSymbols
@@ -33,6 +34,7 @@ export class EvaluatorFactory {
       new EscapeNodeEvaluator,
       new ConcatenateNodeEvaluator,
       new NullNodeEvaluator,
+      new BoolNodeEvaluator,
     ]
   }
 }
