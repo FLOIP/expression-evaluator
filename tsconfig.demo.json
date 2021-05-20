@@ -1,0 +1,39 @@
+{
+	"compilerOptions": {
+	  "allowJs": false,
+	  "allowSyntheticDefaultImports": true,
+	  "target": "ES5",
+	  "module": "CommonJS",
+	  "lib": [
+		"ESNext",
+		"dom"
+	  ],
+	  "declaration": true,
+	  "declarationMap": true,
+	  "sourceMap": true,
+	  "outDir": "demo/dist",
+	  "downlevelIteration": true,
+	  "isolatedModules": true,
+	  "importHelpers": true,
+	  "strict": true,
+	  "noImplicitAny": false,
+	  "noFallthroughCasesInSwitch": true,
+	  "noUnusedLocals": true,
+	  "noUnusedParameters": true,
+	  "esModuleInterop": true,
+	  "strictNullChecks": true,
+	  "strictPropertyInitialization": false,
+	  "types": [
+		"jest"
+	  ]
+	},
+	"include": [
+	  "demo/src/**.ts"
+	],
+	"exclude": [
+	  "node_modules",
+	  "tests/**",
+	  "dist",
+	]
+  }
+  

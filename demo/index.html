@@ -1,0 +1,111 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Expression Predictive Text Demo</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="./dropdown.css">
+</head>
+
+<body style="background-color:#ddd">
+
+
+  <div class="container">
+    <img src="https://darkmatter.votomobile.org/images/logo-lg.png" alt="" width="15%" style="margin:1rem">
+
+    <div class="row">
+      <div class="col-md-4">
+        <label for="input">Expression</label>
+        <div>
+          <textarea name="input" class="form-control" id="input" cols="40" rows="10"></textarea>
+        </div>
+      </div>
+      <div class="col-md-4">
+          <label for="context">Context</label>
+          <div class="">
+            <textarea class="form-control" name="context" id="context" cols="40" rows="25">
+            </textarea>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="">Add Context</label>
+        <div class="card">
+          <div class="card-body">
+            <label>Add Contact Property</label>
+            <div class="form-group row">
+              <label for="property-name" class="col-sm-4 col-form-label">Property</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" name="property-name" id="property-name"> 
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="property-value" class="col-sm-4 col-form-label">Value</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" name="property-value" id="property-value"> 
+              </div>
+            </div>
+            <div class="form-group row">
+              <button id="contact-property-button" class="btn btn-primary form-control col-sm-6 offset-sm-6">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="card">
+          <div class="card-body">
+            <label>Add Block Response</label>
+            <div class="form-group row">
+              <label for="response-label" class="col-sm-4 col-form-label">Label</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" name="response-label" id="response-label"> 
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="response-value" class="col-sm-4 col-form-label">Value</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" name="response-value" id="response-value"> 
+              </div>
+            </div>
+            <div class="form-group row">
+              <button id="block-response-button" class="btn btn-primary form-control col-sm-6 offset-sm-6">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="card">
+          <div class="card-body">
+            <label>Clear Data</label>
+            <div class="form-group row">
+              <button id="delete-properties" class="btn btn-danger form-control col-sm-6">Clear Properties</button>
+              <button id="delete-responses" class="btn btn-danger form-control col-sm-6">Clear Responses</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <hr>
+    <div class="row form-group">
+      <div class="col-md-2 text-center">
+        <button class="btn btn-primary form-control" style="vertical-align: middle;" id="button">Evaluate</button>
+      </div>
+      <div class="col-md-10">
+        <pre id="output" style="background-color: white; padding:1rem"></pre>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div id="error"></div>
+      </div>
+    </div>
+  </div>
+	<script type="text/javascript" src="bundle.js"></script>
+</body>
+
+</html>
