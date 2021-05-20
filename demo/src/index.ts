@@ -5,10 +5,27 @@ import moment from 'moment'
 const input = document.getElementById('input') as HTMLInputElement
 const output = document.getElementById('output') as HTMLElement
 const err = document.getElementById('error') as HTMLElement
+const contextElement = document.getElementById('context') as HTMLInputElement
 
 const evaluator = EvaluatorFactory.create()
 
-const defaultContext = {
+const refreshContext = () => {
+	console.log('refreshing context')
+	try {
+		context = JSON.parse(contextElement.value)
+		err.textContent = ''
+		// @ts-ignore
+		autoSuggest.destroy()
+		console.log('destroyed autosuggest instance')
+	autoSuggest = createAutoSuggest()
+	} catch (error) {
+		err.textContent = error
+	}
+}
+
+contextElement.addEventListener('change', refreshContext)
+
+let context = {
 	contact: {
 		name: "Kyle",
 		phone: "222-222-2222",
@@ -35,6 +52,8 @@ const defaultContext = {
 	}
 }
 
+contextElement.value = JSON.stringify(context, null, 2)
+
 const topLevelContextSuggestions = {
 	trigger: '@',
 	values: [
@@ -42,21 +61,19 @@ const topLevelContextSuggestions = {
 			value: '@()',
 			focusText: [-1, -1]
 		},
-		...Array.from(Object.entries(defaultContext)).map(item => `@${item[0]}`)
+		...Array.from(Object.entries(context)).map(item => `@${item[0]}`)
 	]
 }
 
-const contextSuggestions = Array.from(Object.entries(defaultContext)).map(item => {
-	const name = item[0]
-	return {
-		trigger: `${name}.`,
-		values: Object.getOwnPropertyNames(item[1]).map(val => `${name}.${val}`)
-	}
-})
-
-const context = document.getElementById('context') as HTMLInputElement
-
-context.value = JSON.stringify(defaultContext, null, 2)
+const contextSuggestions = () => {
+	return Array.from(Object.entries(context)).map(item => {
+		const name = item[0]
+		return {
+			trigger: `${name}.`,
+			values: Object.getOwnPropertyNames(item[1]).map(val => `${name}.${val}`)
+		}
+	})
+}
 
 const evaluateButton = document.getElementById("button") as HTMLInputElement
 
@@ -64,7 +81,7 @@ evaluateButton.onclick = () => {
 	output.textContent = err.textContent = null
 	try {
 		const text = input.value
-		const out = evaluator.evaluate(text, JSON.parse(context.value))
+		const out = evaluator.evaluate(text, JSON.parse(contextElement.value))
 		output.textContent = out
 	} catch (e) {
 		err.textContent = e
@@ -98,22 +115,28 @@ const methodSuggestions = Array.from(methods.entries()).map(item => ({
 	  })),
   }))
 
-new AutoSuggest({
-    caseSensitive: false,
-    onChange: function(suggestion) {
-        console.log(`"${suggestion.insertHtml || suggestion.insertText}" has been inserted into #${this.id}`);
-    },
-    suggestions: [
-		topLevelContextSuggestions,
-		...contextSuggestions,
-		...methodSuggestions
-    ]
-}, input);
+const createAutoSuggest = () => {
+	console.log('creating autosuggest instance')
+	return new AutoSuggest({
+		caseSensitive: false,
+		onChange: function(suggestion) {
+			console.log(`"${suggestion.insertHtml || suggestion.insertText}" has been inserted into #${this.id}`);
+		},
+		suggestions: [
+			topLevelContextSuggestions,
+			...contextSuggestions(),
+			...methodSuggestions
+		]
+	}, input);
+}
+
+let autoSuggest = createAutoSuggest()
 
 const mutateContext = (callback) => {
-	const ctx = JSON.parse(context.value)
+	const ctx = JSON.parse(contextElement.value)
 	callback(ctx)
-	context.value =  JSON.stringify(ctx, null, 2)
+	contextElement.value =  JSON.stringify(ctx, null, 2)
+	refreshContext()
 }
 
 const addContactPropertyName   = document.getElementById("property-name") as HTMLInputElement
