@@ -593,3 +593,9 @@ it('should evaluate if with empty string value', () => {
 
   expect(evaluator.evaluate(expr, {})).toEqual('')
 })
+
+it('should evaluate unwrapped methods', () => {
+  const expr = "@IF(false, 'foobar', 'foo')"
+
+  expect(evaluator.evaluate(expr, {})).toEqual('foo')
+})
