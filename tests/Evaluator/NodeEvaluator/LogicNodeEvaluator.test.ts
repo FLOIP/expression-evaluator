@@ -48,6 +48,10 @@ const logicProvider: Array<[Node, boolean]> = [
     makeNode(2, 2, '<>'),
     false
   ],
+  [
+    makeNode('foo', 'FOO', '='),
+    true
+  ]
 
 ]
 

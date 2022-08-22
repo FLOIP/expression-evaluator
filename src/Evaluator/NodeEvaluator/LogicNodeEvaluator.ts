@@ -71,6 +71,7 @@ export class LogicNodeEvaluator implements NodeEvaluator {
       if (item === '') {
         return null
       }
+      item = item.toLowerCase()
     }
     return item
   }
