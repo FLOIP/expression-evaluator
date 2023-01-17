@@ -1,11 +1,12 @@
 import AutoSuggest from '@avcs/autosuggest'
 import {EvaluatorFactory, MethodNodeEvaluatorFactory} from "../../src"
 import moment from 'moment'
+import {readFromQueryParam, writeToQueryParam} from './queryParamUtils'
 
-const input = document.getElementById('input') as HTMLInputElement
+const input = document.getElementById('input') as HTMLTextAreaElement
 const output = document.getElementById('output') as HTMLElement
 const err = document.getElementById('error') as HTMLElement
-const contextElement = document.getElementById('context') as HTMLInputElement
+const contextElement = document.getElementById('context') as HTMLTextAreaElement
 
 const evaluator = EvaluatorFactory.create()
 
@@ -15,9 +16,9 @@ const refreshContext = () => {
 		context = JSON.parse(contextElement.value)
 		err.textContent = ''
 		// @ts-ignore
-		autoSuggest.destroy()
+		autoSuggest?.destroy()
 		console.log('destroyed autosuggest instance')
-	autoSuggest = createAutoSuggest()
+		autoSuggest = createAutoSuggest()
 	} catch (error) {
 		err.textContent = error
 	}
@@ -52,7 +53,11 @@ let context = {
 	}
 }
 
-contextElement.value = JSON.stringify(context, null, 2)
+contextElement.value = readFromQueryParam('context') ?? JSON.stringify(context, null, 2)
+input.value = readFromQueryParam('expression') ?? ''
+
+contextElement.addEventListener('input', event => writeToQueryParam('context', (event.target as HTMLTextAreaElement).value))
+input.addEventListener('input', event => writeToQueryParam('expression', (event.target as HTMLTextAreaElement).value))
 
 const topLevelContextSuggestions = {
 	trigger: '@',
@@ -120,7 +125,8 @@ const createAutoSuggest = () => {
 	return new AutoSuggest({
 		caseSensitive: false,
 		onChange: function(suggestion) {
-			console.log(`"${suggestion.insertHtml || suggestion.insertText}" has been inserted into #${this.id}`);
+      console.log(`"${suggestion.insertHtml || suggestion.insertText}" has been inserted into #${this.id}`)
+			writeToQueryParam('expression', input.value)
 		},
 		suggestions: [
 			topLevelContextSuggestions,
